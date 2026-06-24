@@ -2,21 +2,21 @@
 // Slogan giá trị cốt lõi — nền xanh đậm, chữ vàng (giảm bớt màu vàng nhưng vẫn nổi bật).
 const parts = ['CHI PHÍ TỐI THIỂU', 'HIỆU QUẢ TỐI ĐA'];
 ---
-<div class="border-y border-gold/30 bg-navy py-5 md:py-6">
+<div data-ribbon class="ribbon-shimmer border-y border-gold/30 bg-navy py-5 md:py-6">
   <div class="container-ibs flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center">
-    {
-      parts.map((p, i) => (
-        <>
-          {i > 0 && (
-            <svg class="hidden h-2.5 w-2.5 rotate-45 text-gold sm:block" viewBox="0 0 10 10" aria-hidden="true">
-              <rect width="10" height="10" fill="currentColor" />
-            </svg>
-          )}
-          <span class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold md:text-2xl">
-            {p}
-          </span>
-        </>
-      ))
-    }
+    <span data-ribbon-left class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold md:text-2xl">
+      {parts[0]}
+    </span>
+    <svg
+      data-ribbon-diamond
+      class="hidden h-2.5 w-2.5 rotate-45 text-gold sm:block"
+      viewBox="0 0 10 10"
+      aria-hidden="true"
+    >
+      <rect width="10" height="10" fill="currentColor" />
+    </svg>
+    <span data-ribbon-right class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold md:text-2xl">
+      {parts[1]}
+    </span>
   </div>
 </div>

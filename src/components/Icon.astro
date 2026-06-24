@@ -4,8 +4,9 @@ interface Props {
   name: string;
   class?: string;
   id?: string;
+  draw?: boolean;
 }
-const { name, class: className = 'w-6 h-6', id } = Astro.props;
+const { name, class: className = 'w-6 h-6', id, draw = false } = Astro.props;
 
 const paths: Record<string, string> = {
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
@@ -36,7 +37,7 @@ const inner = paths[name] ?? '';
 ---
 <svg
   id={id}
-  class={className}
+  class:list={[className, draw && 'icon-draw']}
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"

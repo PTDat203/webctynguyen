@@ -17,6 +17,7 @@
     "@fontsource/inter": "^5.2.8",
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^7.0.2",
+    "gsap": "^3.15.0",
     "tailwindcss": "^4.3.1"
   },
   "devDependencies": {

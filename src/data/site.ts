@@ -63,6 +63,7 @@ export type Service = {
   title: string;
   tagline: string;
   points: string[];
+  featured?: boolean;
 };
 
 export const services: Service[] = [
@@ -72,6 +73,7 @@ export const services: Service[] = [
     icon: 'booth',
     title: 'Thiết kế & Thi công gian hàng triển lãm',
     tagline: 'Gian tiêu chuẩn · cụm Pavilion · gian đặc biệt',
+    featured: true,
     points: [
       'Báo giá nhanh chóng, cạnh tranh; chính sách giá đặc biệt cho Hội viên IBS',
       'Miễn phí thiết kế theo yêu cầu — từ gian tiêu chuẩn, cụm Pavilion đến gian đặc biệt',
@@ -83,8 +85,8 @@ export const services: Service[] = [
     id: 'dan-dung-su-kien',
     no: '02',
     icon: 'stage',
-    title: 'Thi công & Dàn dựng hội nghị, giải trí, hòa nhạc',
-    tagline: 'Hội nghị cao cấp · liveshow · concert · truyền hình trực tiếp',
+    title: 'Tổ chức sự kiện',
+    tagline: 'Hội nghị · liveshow · concert · truyền hình trực tiếp',
     points: [
       'Hội nghị, hội thảo cao cấp trong nhà / ngoài trời, khách sạn 5–6 sao tại Việt Nam',
       'Linh hoạt xử lý mọi địa hình ngoài trời (bãi biển, sân golf...) an toàn & thẩm mỹ cao',

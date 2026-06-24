@@ -4,6 +4,9 @@ import { services } from '../data/site';
 import { serviceImages } from '../data/images';
 import SectionHeader from './SectionHeader.astro';
 import Icon from './Icon.astro';
+
+const featured = services.find((s) => s.featured)!;
+const secondary = services.filter((s) => !s.featured);
 ---
 <section id="dich-vu" class="bg-paper py-24 md:py-32">
   <div class="container-ibs">
@@ -13,29 +16,68 @@ import Icon from './Icon.astro';
       intro="Một điểm dừng — từ ý tưởng, thiết kế, thi công đến vận hành và truyền thông."
     />
 
-    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Dịch vụ chủ lực -->
+    <article
+      data-service-card
+      data-service-featured
+      class="service-featured group mt-14 flex flex-col overflow-hidden rounded-sm border-2 border-gold bg-white shadow-[0_20px_50px_rgba(12,58,117,0.14)] lg:flex-row"
+    >
+      <div class="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:w-[58%] lg:min-h-[320px]">
+        <Image
+          src={serviceImages[featured.id]}
+          alt={featured.title}
+          widths={[640, 960, 1280]}
+          sizes="(min-width:1024px) 58vw, 100vw"
+          class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/25 to-navy/10 lg:bg-gradient-to-r lg:from-transparent lg:via-navy/20 lg:to-navy/50"></div>
+        <span class="absolute right-5 top-4 font-display text-7xl font-bold text-white/20 md:text-8xl">{featured.no}</span>
+        <span class="absolute left-4 top-4 rounded-sm bg-gold px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-md">
+          Dịch vụ chủ lực
+        </span>
+        <div data-service-icon class="absolute bottom-4 left-4 grid h-14 w-14 place-items-center rounded-sm bg-gold text-white shadow-lg">
+          <Icon name={featured.icon} class="h-7 w-7" />
+        </div>
+      </div>
+      <div class="flex flex-1 flex-col justify-center p-8 md:p-10 lg:p-12">
+        <p class="overline mb-3">IBS Signature</p>
+        <h3 class="font-display text-2xl font-bold leading-snug text-navy md:text-[1.75rem] lg:text-3xl">
+          {featured.title}
+        </h3>
+        <p class="mt-4 text-base font-light leading-relaxed text-slate md:text-lg">{featured.tagline}</p>
+        <a href="#lien-he" class="btn btn-primary mt-8 w-fit">
+          Nhận tư vấn gian hàng
+        </a>
+      </div>
+    </article>
+
+    <!-- Các dịch vụ khác -->
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
       {
-        services.map((s) => (
-          <article class="reveal group flex flex-col overflow-hidden rounded-sm border border-mist bg-white shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-card-hover)]">
-            <div class="relative aspect-[16/10] overflow-hidden">
+        secondary.map((s) => (
+          <article
+            data-service-card
+            class="service-secondary group flex flex-col overflow-hidden rounded-sm border border-mist/90 bg-white/80 shadow-sm transition-all duration-300 hover:border-navy/15 hover:bg-white hover:shadow-[var(--shadow-card)]"
+          >
+            <div class="relative aspect-[16/11] overflow-hidden">
               <Image
                 src={serviceImages[s.id]}
                 alt={s.title}
-                widths={[400, 800]}
-                sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-                class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                widths={[320, 480]}
+                sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+                class="service-secondary-img absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-navy/75 via-navy/20 to-transparent"></div>
-              <span class="absolute right-4 top-2 font-display text-5xl font-bold text-white/25">{s.no}</span>
-              <div class="absolute bottom-4 left-4 grid h-11 w-11 place-items-center rounded-sm bg-gold text-white shadow-lg">
-                <Icon name={s.icon} class="h-6 w-6" />
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/15 to-transparent"></div>
+              <span class="absolute right-3 top-2 font-display text-3xl font-bold text-white/20">{s.no}</span>
+              <div class="absolute bottom-3 left-3 grid h-9 w-9 place-items-center rounded-sm bg-navy/85 text-gold">
+                <Icon name={s.icon} class="h-4 w-4" />
               </div>
             </div>
-            <div class="flex flex-1 flex-col p-6">
-              <h3 class="font-display text-lg font-bold leading-snug">{s.title}</h3>
-              <p class="mt-2.5 flex-1 text-sm font-light leading-relaxed text-slate">{s.tagline}</p>
-              <a href="#lien-he" class="link-arrow mt-5 text-[0.72rem]">
-                Tìm hiểu thêm <Icon name="arrow-right" class="h-4 w-4" />
+            <div class="flex flex-1 flex-col p-4 md:p-5">
+              <h3 class="font-display text-[0.95rem] font-semibold leading-snug text-navy/90">{s.title}</h3>
+              <p class="mt-2 flex-1 text-xs font-light leading-relaxed text-slate/80">{s.tagline}</p>
+              <a href="#lien-he" class="link-arrow mt-4 text-[0.65rem] text-navy/70">
+                Tìm hiểu thêm <Icon name="arrow-right" class="h-3.5 w-3.5" />
               </a>
             </div>
           </article>
@@ -44,3 +86,12 @@ import Icon from './Icon.astro';
     </div>
   </div>
 </section>
+
+<style>
+  .service-secondary-img {
+    filter: saturate(0.88) brightness(0.96);
+  }
+  .service-secondary:hover .service-secondary-img {
+    filter: saturate(1) brightness(1);
+  }
+</style>

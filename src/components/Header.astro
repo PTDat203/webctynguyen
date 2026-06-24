@@ -6,10 +6,10 @@ import logo from '../assets/logo-ibs.png';
 ---
 <header
   id="site-header"
-  class="sticky top-0 z-50 border-b border-mist bg-white/90 backdrop-blur transition-all duration-300"
+  class="sticky top-0 z-50 border-b border-mist bg-white/90 backdrop-blur transition-shadow duration-300"
 >
-  <div class="container-ibs flex h-16 items-center justify-between md:h-20">
-    <a href="#home" class="flex items-center" aria-label="IBS — Trang chủ">
+  <div data-header-inner class="container-ibs flex h-16 items-center justify-between md:h-20">
+    <a href="#home" data-header-logo class="flex items-center origin-left" aria-label="IBS — Trang chủ">
       <Image src={logo} alt="IBS — International Business Services" class="h-9 w-auto md:h-12" />
     </a>
 
@@ -19,7 +19,7 @@ import logo from '../assets/logo-ibs.png';
           <a
             href={item.href}
             data-nav-link
-            class="relative py-2 text-[0.92rem] font-medium text-navy/75 transition-colors hover:text-navy"
+            class="nav-link relative py-2 text-[0.92rem] font-medium text-navy/75 transition-colors hover:text-navy"
           >
             {item.label}
           </a>
@@ -71,8 +71,7 @@ import logo from '../assets/logo-ibs.png';
 </header>
 
 <style>
-  [data-nav-link].is-active { color: var(--color-navy); }
-  [data-nav-link].is-active::after {
+  .nav-link::after {
     content: '';
     position: absolute;
     left: 0;
@@ -80,21 +79,18 @@ import logo from '../assets/logo-ibs.png';
     height: 2px;
     width: 100%;
     background: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: center center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  [data-nav-link].is-active { color: var(--color-navy); }
+  [data-nav-link].is-active::after { transform: scaleX(1); }
 </style>
 
 <script>
-  const header = document.getElementById('site-header');
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
   const icon = document.getElementById('menu-icon');
-
-  const onScroll = () => {
-    if (!header) return;
-    header.classList.toggle('shadow-md', window.scrollY > 60);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
 
   const setMenu = (open: boolean) => {
     if (!menu || !toggle) return;
