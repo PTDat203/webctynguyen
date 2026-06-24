@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/* Self-hosted fonts (Vietnamese-safe) */
+@import "@fontsource/be-vietnam-pro/300.css";
+@import "@fontsource/be-vietnam-pro/400.css";
+@import "@fontsource/be-vietnam-pro/500.css";
+@import "@fontsource/be-vietnam-pro/600.css";
+@import "@fontsource/be-vietnam-pro/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+/* ===== Design tokens — xanh dương (theo logo IBS) + vàng gold ===== */
+@theme {
+  --color-navy: #0c3a75;     /* xanh dương đậm theo logo — section tối, tiêu đề */
+  --color-indigo: #1a5ba6;   /* xanh trung gian — dùng cho gradient */
+  --color-sky: #2e86d6;      /* xanh dương sáng — điểm nhấn */
+  --color-skylight: #80bbdf; /* xanh nhạt theo logo */
+  --color-gold: #e0a82e;     /* vàng gold ấm */
+  --color-amber: #f2c94c;    /* vàng sáng — hover/điểm nhấn */
+  --color-ink: #15181e;
+  --color-slate: #5b6472;
+  --color-mist: #e6e9ef;
+  --color-paper: #f6f8fb;
+
+  --font-display: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 10px 30px rgba(12, 58, 117, 0.08);
+  --shadow-card-hover: 0 20px 48px rgba(12, 58, 117, 0.16);
+}
+
+/* ===== Base ===== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: #ffffff;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-navy);
+    text-wrap: balance;
+  }
+
+  /* anchor offset dưới sticky header */
+  section[id] { scroll-margin-top: 84px; }
+
+  ::selection {
+    background: var(--color-gold);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sky);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ===== Component classes ===== */
+@layer components {
+  .container-ibs {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .overline {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    padding: 0.9rem 1.75rem;
+    border-radius: 2px;
+    transition: transform 0.2s ease, background-color 0.2s ease,
+      color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--color-gold);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-amber);
+    color: var(--color-navy);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(224, 168, 46, 0.32);
+  }
+  .btn-outline {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: #fff;
+  }
+  .btn-outline:hover {
+    background: #fff;
+    color: var(--color-navy);
+    transform: translateY(-2px);
+  }
+  .btn-outline-navy {
+    border: 1px solid var(--color-navy);
+    color: var(--color-navy);
+  }
+  .btn-outline-navy:hover {
+    background: var(--color-navy);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  /* link with arrow */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    transition: gap 0.2s ease, color 0.2s ease;
+  }
+  .link-arrow:hover { color: var(--color-gold); gap: 0.85rem; }
+
+  /* Reveal-on-scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+}

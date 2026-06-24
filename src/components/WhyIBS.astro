@@ -1,0 +1,29 @@
+---
+import { whyIbs } from '../data/site';
+import Icon from './Icon.astro';
+---
+<section class="bg-navy py-24 md:py-28">
+  <div class="container-ibs">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="overline mb-4">Vì sao chọn IBS</p>
+      <h2 class="font-display text-3xl font-bold text-white md:text-[2.4rem]">
+        Chi phí tối thiểu — Hiệu quả tối đa
+      </h2>
+      <span class="mx-auto mt-5 block h-px w-16 bg-gold"></span>
+    </div>
+
+    <div class="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        whyIbs.map((w) => (
+          <div class="reveal text-center">
+            <div class="mx-auto grid h-14 w-14 place-items-center rounded-full border border-gold/40 text-gold">
+              <Icon name={w.icon} class="h-7 w-7" />
+            </div>
+            <h3 class="mt-6 font-display text-lg font-semibold text-white">{w.title}</h3>
+            <p class="mt-2.5 text-sm font-light leading-relaxed text-white/65">{w.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

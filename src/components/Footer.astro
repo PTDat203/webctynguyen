@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import { company, nav, services } from '../data/site';
+import Icon from './Icon.astro';
+import logo from '../assets/logo-ibs.png';
+const year = 2026;
+---
+<footer class="bg-navy text-white/70">
+  <div class="container-ibs grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <div class="inline-block rounded-sm bg-white px-4 py-3">
+        <Image src={logo} alt="IBS — International Business Services" class="h-9 w-auto" />
+      </div>
+      <p class="mt-5 text-sm font-light leading-relaxed">
+        {company.tagline} — hệ sinh thái triển lãm toàn diện, đồng hành cùng doanh nghiệp Việt vươn tầm quốc tế.
+      </p>
+      <a
+        href={company.facebook}
+        target="_blank"
+        rel="noopener"
+        class="mt-5 inline-flex items-center gap-2 text-sm transition-colors hover:text-gold"
+      >
+        <Icon name="facebook" class="h-4 w-4" /> Theo dõi trên Facebook
+      </a>
+    </div>
+
+    <div>
+      <h3 class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white">Dịch vụ</h3>
+      <ul class="space-y-3 text-sm font-light">
+        {services.map((s) => (
+          <li><a href="#dich-vu" class="transition-colors hover:text-gold">{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white">Liên kết</h3>
+      <ul class="space-y-3 text-sm font-light">
+        {nav.map((n) => (
+          <li><a href={n.href} class="transition-colors hover:text-gold">{n.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white">Liên hệ</h3>
+      <ul class="space-y-4 text-sm font-light">
+        <li class="flex items-start gap-3">
+          <Icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+          <span>{company.address}</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="phone" class="h-4 w-4 shrink-0 text-gold" />
+          <a href={company.hotlineHref} class="transition-colors hover:text-gold">{company.hotline}</a>
+        </li>
+        <li class="flex items-center gap-3">
+          <Icon name="globe" class="h-4 w-4 shrink-0 text-gold" />
+          <span>{company.website}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="container-ibs flex flex-col items-center justify-between gap-2 py-5 text-xs font-light text-white/50 sm:flex-row">
+      <p>© {year} {company.shortName}. Bảo lưu mọi quyền.</p>
+      <p class="uppercase tracking-[0.18em]">{company.legalEn}</p>
+    </div>
+  </div>
+</footer>

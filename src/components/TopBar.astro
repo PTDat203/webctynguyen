@@ -1,0 +1,36 @@
+---
+import { company } from '../data/site';
+import Icon from './Icon.astro';
+---
+<div class="hidden bg-navy text-white/80 md:block">
+  <div class="container-ibs flex h-9 items-center justify-between text-[0.8rem]">
+    <div class="flex items-center gap-5">
+      <a href={company.hotlineHref} class="inline-flex items-center gap-1.5 transition-colors hover:text-gold">
+        <Icon name="phone" class="h-3.5 w-3.5" />
+        <span>{company.hotline}</span>
+      </a>
+      <span class="inline-flex items-center gap-1.5">
+        <Icon name="map-pin" class="h-3.5 w-3.5" />
+        <span>{company.address}</span>
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a
+        href={company.facebook}
+        target="_blank"
+        rel="noopener"
+        aria-label="Facebook IBS"
+        class="inline-flex items-center gap-1.5 transition-colors hover:text-gold"
+      >
+        <Icon name="facebook" class="h-3.5 w-3.5" />
+        <span>Facebook</span>
+      </a>
+      <!-- Chỗ cho toggle ngôn ngữ VI | EN (kích hoạt khi có bản tiếng Anh) -->
+      <span class="select-none text-white/60">
+        <span class="font-semibold text-gold">VI</span>
+        <span class="px-1">|</span>
+        <span class="cursor-not-allowed" title="Sắp có">EN</span>
+      </span>
+    </div>
+  </div>
+</div>

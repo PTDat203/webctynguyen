@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import { projects, projectFilters } from '../data/site';
+import { projectImages } from '../data/images';
+import SectionHeader from './SectionHeader.astro';
+import Icon from './Icon.astro';
+---
+<section id="du-an" class="bg-white py-24 md:py-32">
+  <div class="container-ibs">
+    <SectionHeader
+      overline="Dự án tiêu biểu"
+      title="Những dấu ấn IBS đã kiến tạo"
+    />
+
+    <div class="reveal mt-10 flex flex-wrap justify-center gap-2.5" role="tablist" aria-label="Lọc dự án">
+      {
+        projectFilters.map((f, i) => (
+          <button
+            type="button"
+            data-filter={f}
+            class:list={[
+              'rounded-full border px-5 py-2 text-sm font-medium transition-all',
+              i === 0
+                ? 'border-gold bg-gold text-white'
+                : 'border-mist text-slate hover:border-navy hover:text-navy',
+            ]}
+          >
+            {f}
+          </button>
+        ))
+      }
+    </div>
+
+    <div id="project-grid" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        projects.map((p) => (
+          <button
+            type="button"
+            class="project-card group relative block aspect-[4/3] overflow-hidden rounded-sm bg-navy text-left"
+            data-category={p.category}
+            data-title={p.title}
+            data-desc={p.desc}
+          >
+            <Image
+              src={projectImages[p.title]}
+              alt={p.title}
+              widths={[400, 800]}
+              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/10 to-transparent"></div>
+            <span class="absolute left-4 top-4 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-gold">
+              {p.category}
+            </span>
+            <div class="absolute inset-x-0 bottom-0 p-5">
+              <h3 class="font-display text-lg font-semibold text-white">{p.title}</h3>
+            </div>
+          </button>
+        ))
+      }
+    </div>
+
+    <p id="project-empty" class="mt-10 hidden text-center text-slate">Chưa có dự án trong nhóm này.</p>
+  </div>
+</section>
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[90] hidden items-center justify-center bg-navy/85 p-4 backdrop-blur"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Chi tiết dự án"
+>
+  <div class="relative w-full max-w-2xl overflow-hidden rounded-sm bg-white">
+    <div id="lb-media" class="aspect-video w-full bg-navy"></div>
+    <button id="lb-close" type="button" class="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-navy shadow" aria-label="Đóng">
+      <Icon name="close" class="h-5 w-5" />
+    </button>
+    <div class="p-6">
+      <span id="lb-cat" class="overline"></span>
+      <h3 id="lb-title" class="mt-1.5 font-display text-2xl font-bold"></h3>
+      <p id="lb-desc" class="mt-2 font-light text-slate"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  const empty = document.getElementById('project-empty');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter || 'Tất cả';
+      buttons.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('bg-gold', active);
+        b.classList.toggle('text-white', active);
+        b.classList.toggle('border-gold', active);
+        b.classList.toggle('text-slate', !active);
+        b.classList.toggle('border-mist', !active);
+      });
+      let visible = 0;
+      cards.forEach((c) => {
+        const show = filter === 'Tất cả' || c.dataset.category === filter;
+        c.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      empty?.classList.toggle('hidden', visible !== 0);
+    });
+  });
+
+  const lb = document.getElementById('lightbox');
+  const lbMedia = document.getElementById('lb-media');
+  const lbCat = document.getElementById('lb-cat');
+  const lbTitle = document.getElementById('lb-title');
+  const lbDesc = document.getElementById('lb-desc');
+  const lbClose = document.getElementById('lb-close');
+
+  const openLb = (c: HTMLElement) => {
+    if (!lb) return;
+    if (lbCat) lbCat.textContent = c.dataset.category || '';
+    if (lbTitle) lbTitle.textContent = c.dataset.title || '';
+    if (lbDesc) lbDesc.textContent = c.dataset.desc || '';
+    const cardImg = c.querySelector('img');
+    const src = cardImg ? cardImg.currentSrc || cardImg.src : '';
+    if (lbMedia) lbMedia.innerHTML = src ? `<img src="${src}" alt="" class="h-full w-full object-cover" />` : '';
+    lb.classList.remove('hidden');
+    lb.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeLb = () => {
+    if (!lb) return;
+    lb.classList.add('hidden');
+    lb.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+  cards.forEach((c) => c.addEventListener('click', () => openLb(c)));
+  lbClose?.addEventListener('click', closeLb);
+  lb?.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+</script>

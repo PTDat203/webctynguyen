@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="theme-color" content="#0c3a75" />
+    <Seo title={title} description={description} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-navy focus:px-4 focus:py-2 focus:text-white">
+      Bỏ qua tới nội dung
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Nút lên đầu trang -->
+    <button
+      id="back-to-top"
+      type="button"
+      aria-label="Lên đầu trang"
+      class="pointer-events-none fixed bottom-6 right-6 z-40 grid h-12 w-12 translate-y-3 place-items-center rounded-full bg-navy text-gold opacity-0 shadow-lg ring-1 ring-white/15 transition-all duration-300 hover:bg-gold hover:text-navy"
+    >
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
+
+    <script>
+      const btt = document.getElementById('back-to-top');
+      if (btt) {
+        const toggleBtt = () => {
+          const show = window.scrollY > 400;
+          btt.classList.toggle('opacity-0', !show);
+          btt.classList.toggle('translate-y-3', !show);
+          btt.classList.toggle('pointer-events-none', !show);
+        };
+        toggleBtt();
+        window.addEventListener('scroll', toggleBtt, { passive: true });
+        btt.addEventListener('click', () =>
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        );
+      }
+    </script>
+
+    <!-- Reveal-on-scroll (light, dependency-free) -->
+    <script>
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('.reveal');
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

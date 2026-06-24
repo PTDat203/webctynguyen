@@ -1,0 +1,63 @@
+---
+import { stats } from '../data/site';
+---
+<section class="bg-navy py-14 md:py-16">
+  <div class="container-ibs grid grid-cols-2 gap-8 lg:grid-cols-4">
+    {
+      stats.map((s) => (
+        <div class="reveal text-center">
+          <div
+            class="font-display text-4xl font-extrabold text-gold md:text-5xl"
+            data-counter
+            data-target={s.value}
+            data-suffix={s.suffix}
+          >
+            0{s.suffix}
+          </div>
+          <p class="mt-2.5 text-sm font-light tracking-wide text-white/65">{s.label}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const fmt = (n: number) => n.toLocaleString('vi-VN');
+  const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const run = (el: HTMLElement) => {
+    const target = Number(el.dataset.target || '0');
+    const suffix = el.dataset.suffix || '';
+    if (prefersReduced) {
+      el.textContent = fmt(target) + suffix;
+      return;
+    }
+    const duration = 1400;
+    const start = performance.now();
+    const step = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(Math.round(target * eased)) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            run(entry.target as HTMLElement);
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    counters.forEach((c) => io.observe(c));
+  } else {
+    counters.forEach((c) => run(c));
+  }
+</script>

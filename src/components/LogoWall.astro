@@ -1,0 +1,22 @@
+---
+// Tường logo đối tác/khách hàng — CẦN logo thật từ khách (thay các ô placeholder).
+const placeholders = Array.from({ length: 12 }, (_, i) => `Đối tác ${i + 1}`);
+---
+<section class="bg-white py-16 md:py-20">
+  <div class="container-ibs">
+    <p class="overline reveal text-center">Đối tác &amp; khách hàng</p>
+    <h2 class="reveal mx-auto mt-3 max-w-xl text-center font-display text-2xl font-bold md:text-3xl">
+      Được tin tưởng bởi các thương hiệu &amp; ban tổ chức
+    </h2>
+    <div class="reveal mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      {
+        placeholders.map((name) => (
+          <div class="grid h-20 place-items-center rounded-xl border border-mist bg-paper text-sm font-semibold text-slate/60 grayscale transition-all hover:grayscale-0 hover:text-navy">
+            {name}
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-6 text-center text-xs text-slate/60">* Khu vực hiển thị logo đối tác — sẽ cập nhật bằng logo thật.</p>
+  </div>
+</section>
