@@ -193,12 +193,12 @@
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.55rem 1.45rem 0.55rem 1.2rem;
+    gap: 0.9rem;
+    padding: 0.8rem 2.15rem 0.8rem 1.8rem;
     border-radius: 999px;
     font-family: var(--font-sans);
     font-weight: 800;
-    font-size: 0.85rem;
+    font-size: 1.28rem;
     letter-spacing: 0.2em;
     line-height: 1;
     text-transform: uppercase;
@@ -207,10 +207,21 @@
     background: linear-gradient(180deg, #d8b04a 0%, #f1d589 38%, #d0a53c 100%);
     box-shadow: 0 10px 24px rgba(120, 90, 20, 0.4), 0 3px 8px rgba(120, 90, 20, 0.28);
   }
+  #dich-vu .section-overline.eyebrow {
+    font-size: 1.5rem;
+    padding: 1.05rem 2.25rem;
+    letter-spacing: 0.22em;
+  }
+  @media (min-width: 768px) {
+    #dich-vu .section-overline.eyebrow {
+      font-size: 1.58rem;
+      padding: 1.1rem 2.5rem;
+    }
+  }
   .eyebrow::before {
     content: '';
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 0.75rem;
+    height: 0.75rem;
     border-radius: 999px;
     flex: none;
     background: radial-gradient(circle at 35% 35%, #6fb2ea, #2e86d6 58%, #15518f);
@@ -238,6 +249,13 @@
   }
   .text-gold-metallic {
     color: var(--color-gold-text);
+  }
+  .hero-highlight {
+    background: linear-gradient(90deg, #ffe066 0%, #f6b72b 45%, #f0a51f 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 16px rgba(255, 195, 60, 0.32);
+    font-weight: 900;
   }
   .border-gold-metallic {
     border: 2px solid transparent;
