@@ -7,10 +7,10 @@ const mapSrc =
   encodeURIComponent('41A Lý Thái Tổ, Hoàn Kiếm, Hà Nội') +
   '&output=embed';
 ---
-<section id="lien-he" class="bg-gradient-navy gradient-accent-top py-24 md:py-32">
+<section id="lien-he" data-blueprint data-spotlight class="bg-gradient-navy gradient-accent-top py-24 md:py-32">
   <div class="container-ibs">
     <div data-contact-header class="mx-auto max-w-2xl text-center">
-      <p class="overline">{company.oneStop}</p>
+      <p class="eyebrow">{company.oneStop}</p>
       <h2 class="mt-4 font-display text-3xl font-bold text-white md:text-[2.5rem]">
         <T t={ui.contact.title} />
       </h2>
@@ -109,7 +109,7 @@ const mapSrc =
           </div>
 
           <div data-form-field>
-            <button type="submit" class="btn btn-primary btn-glow w-full"><T t={ui.contact.submit} /></button>
+            <button type="submit" data-ripple class="btn btn-primary btn-glow w-full"><T t={ui.contact.submit} /></button>
             <p class="text-center text-xs font-light text-slate">
               <T t={ui.contact.orCall} /> <a href={company.hotlineHref} class="font-semibold text-navy hover:text-gold">{company.hotline}</a>
             </p>

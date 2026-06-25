@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IBS Holdings - Visual Landing Demo</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="is-loading">
+    <div class="page-loader" aria-label="Loading">
+      <div class="loader-logo" aria-hidden="true">
+        <div class="loader-ring loader-ring-one"></div>
+        <div class="loader-ring loader-ring-two"></div>
+        <span>IBS</span>
+        <small>Holdings</small>
+      </div>
+      <div class="loader-bar" aria-hidden="true"><span></span></div>
+    </div>
+
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <canvas id="blueprint-canvas" aria-hidden="true"></canvas>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header" data-reveal>
+      <a class="brand magnetic" href="#top" aria-label="IBS Holdings home">
+        <span class="brand-mark">IBS</span>
+        <span>
+          <strong>IBS Holdings</strong>
+          <small>International Business Services</small>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="magnetic" href="#story">Story</a>
+        <a class="magnetic" href="#images">Hình ảnh</a>
+        <a class="magnetic" href="#booths">Không gian</a>
+        <a class="magnetic" href="#events">Sự kiện</a>
+      </nav>
+
+      <a class="header-cta magnetic ripple-target" href="#images">Xem ảnh</a>
+    </header>
+
+    <main id="top">
+      <section class="visual-hero section-spotlight" aria-labelledby="hero-title">
+        <div class="hero-label" data-reveal>
+          <p class="eyebrow">Visual profile demo</p>
+          <h1 id="hero-title">IBS Holdings</h1>
+          <p>Business services, partner network, exhibitions and operations.</p>
+          <a class="primary-button magnetic ripple-target" href="#images">
+            Khám phá
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="hero-image hero-image-main" data-reveal data-tilt>
+          <img src="./assets/docx-media/image9.png" alt="Exhibition venue exterior" />
+        </div>
+        <div class="hero-image hero-image-side" data-reveal data-tilt>
+          <img src="./assets/docx-media/image8.png" alt="Modern exhibition booth" />
+        </div>
+        <div class="hero-image hero-image-float" data-reveal data-tilt>
+          <img src="./assets/docx-media/image7.png" alt="Business exhibition crowd" />
+        </div>
+      </section>
+
+      <section id="story" class="scroll-story section-spotlight" aria-label="Scroll-led IBS story">
+        <div class="story-sticky">
+          <div class="story-copy" data-reveal>
+            <p class="eyebrow">Business momentum</p>
+            <h2>Kết nối qua từng lớp hình ảnh.</h2>
+          </div>
+          <div class="story-frame story-frame-one">
+            <img src="./assets/docx-media/image94.jpeg" alt="Large event stage" />
+          </div>
+          <div class="story-frame story-frame-two">
+            <img src="./assets/docx-media/image71.jpeg" alt="Exhibition space" />
+          </div>
+          <div class="story-frame story-frame-three">
+            <img src="./assets/docx-media/image132.jpeg" alt="Business networking" />
+          </div>
+          <div class="story-frame story-frame-four">
+            <img src="./assets/docx-media/image104.jpeg" alt="Urban business district" />
+          </div>
+        </div>
+      </section>
+
+      <section id="images" class="image-river section-spotlight" aria-label="IBS image highlights">
+        <div class="section-mini" data-reveal>
+          <span>01</span>
+          <h2>Ảnh lớn, ít chữ.</h2>
+        </div>
+
+        <div class="river-grid">
+          <figure class="river-card river-wide" data-reveal data-tilt>
+            <img src="./assets/docx-media/image132.jpeg" alt="Business meeting at exhibition table" />
+            <figcaption>Networking</figcaption>
+          </figure>
+          <figure class="river-card" data-reveal data-tilt>
+            <img src="./assets/docx-media/image118.jpeg" alt="Technology exhibition booth" />
+            <figcaption>Technology</figcaption>
+          </figure>
+          <figure class="river-card" data-reveal data-tilt>
+            <img src="./assets/docx-media/image149.jpeg" alt="Location map" />
+            <figcaption>Location</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="booths" class="showcase-section section-spotlight">
+        <div class="section-mini" data-reveal>
+          <span>02</span>
+          <h2>Không gian triển lãm.</h2>
+        </div>
+
+        <div class="showcase-grid">
+          <figure class="showcase-card tall" data-reveal data-tilt>
+            <img src="./assets/docx-media/image70.jpeg" alt="Booth layout concept" />
+            <figcaption>Booth concept</figcaption>
+          </figure>
+          <figure class="showcase-card wide" data-reveal data-tilt>
+            <img src="./assets/docx-media/image71.jpeg" alt="Exhibition booth corridor" />
+            <figcaption>Expo space</figcaption>
+          </figure>
+          <figure class="showcase-card" data-reveal data-tilt>
+            <img src="./assets/docx-media/image72.jpeg" alt="Premium exhibition stand" />
+            <figcaption>Partner zone</figcaption>
+          </figure>
+          <figure class="showcase-card wide" data-reveal data-tilt>
+            <img src="./assets/docx-media/image123.jpeg" alt="Exhibition booth collection" />
+            <figcaption>Display system</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="events" class="full-bleed-media section-spotlight">
+        <img src="./assets/docx-media/image94.jpeg" alt="Large business event stage" />
+        <div class="media-overlay" data-reveal>
+          <span>03</span>
+          <h2>Sự kiện. Kết nối. Vận hành.</h2>
+        </div>
+      </section>
+
+      <section class="image-stack section-spotlight" aria-label="Project imagery">
+        <figure class="stack-card stack-large" data-reveal data-tilt>
+          <img src="./assets/docx-media/image85.jpeg" alt="Conference room" />
+          <figcaption>Conference</figcaption>
+        </figure>
+        <figure class="stack-card" data-reveal data-tilt>
+          <img src="./assets/docx-media/image104.jpeg" alt="Urban business district" />
+          <figcaption>Market</figcaption>
+        </figure>
+        <figure class="stack-card" data-reveal data-tilt>
+          <img src="./assets/docx-media/image101.jpeg" alt="Business network graphic" />
+          <figcaption>Network</figcaption>
+        </figure>
+        <figure class="stack-card stack-large" data-reveal data-tilt>
+          <img src="./assets/docx-media/image84.jpeg" alt="Business forum stage" />
+          <figcaption>Forum</figcaption>
+        </figure>
+      </section>
+
+      <section class="gallery-wall section-spotlight" aria-label="More IBS images">
+        <img data-reveal data-tilt src="./assets/docx-media/image10.png" alt="Exhibition venue entrance" />
+        <img data-reveal data-tilt src="./assets/docx-media/image119.jpeg" alt="Busy exhibition booth" />
+        <img data-reveal data-tilt src="./assets/docx-media/image53.jpeg" alt="Glass building facade" />
+        <img data-reveal data-tilt src="./assets/docx-media/image54.jpeg" alt="Modern building curve" />
+        <img data-reveal data-tilt src="./assets/docx-media/image93.jpeg" alt="Event lighting" />
+        <img data-reveal data-tilt src="./assets/docx-media/image138.jpeg" alt="Business presentation" />
+      </section>
+
+      <section id="contact" class="visual-contact section-spotlight">
+        <div class="contact-image" data-reveal data-tilt>
+          <img src="./assets/docx-media/image95.jpeg" alt="Outdoor business event at night" />
+        </div>
+        <div class="contact-copy" data-reveal>
+          <p class="eyebrow">IBS Holdings</p>
+          <h2>Demo landing page.</h2>
+          <div class="contact-actions">
+            <a class="primary-button magnetic ripple-target" href="mailto:contact@ibs-holdings.demo">
+              Email
+            </a>
+            <a class="secondary-button magnetic ripple-target" href="tel:+84000000000">
+              Call
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

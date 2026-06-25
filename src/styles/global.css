@@ -190,19 +190,41 @@
     padding-inline: 1.5rem;
   }
 
-  .overline {
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.45rem 0.55rem 1.2rem;
+    border-radius: 999px;
     font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 0.75rem;
-    letter-spacing: 0.24em;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    line-height: 1;
     text-transform: uppercase;
-    color: var(--color-gold-text-dark);
+    text-decoration: none;
+    color: var(--color-navy);
+    background: linear-gradient(180deg, #d8b04a 0%, #f1d589 38%, #d0a53c 100%);
+    box-shadow: 0 10px 24px rgba(120, 90, 20, 0.4), 0 3px 8px rgba(120, 90, 20, 0.28);
   }
-  .bg-gradient-navy .overline,
-  .bg-gradient-navy-deep .overline,
-  .why-ibs-gradient .overline,
-  #lien-he .overline {
-    color: var(--color-gold-text);
+  .eyebrow::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    flex: none;
+    background: radial-gradient(circle at 35% 35%, #6fb2ea, #2e86d6 58%, #15518f);
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.35),
+      0 0 6px 1px rgba(46, 134, 214, 0.55);
+    animation: eyebrowGlow 2.8s ease-in-out infinite;
+  }
+  /* Trên nền tối: quầng vàng nhẹ để bật khỏi nền navy */
+  .bg-gradient-navy .eyebrow,
+  .bg-gradient-navy-deep .eyebrow,
+  .why-ibs-gradient .eyebrow,
+  #lien-he .eyebrow {
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), 0 3px 8px rgba(0, 0, 0, 0.3);
   }
 
   /* Vàng metallic — nhẹ, không chói */
@@ -470,6 +492,19 @@
   50% { box-shadow: var(--shadow-gold-lg); }
 }
 
+@keyframes eyebrowGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.3),
+      0 0 5px 1px rgba(46, 134, 214, 0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.4),
+      0 0 9px 2px rgba(46, 134, 214, 0.7);
+  }
+}
+
 @layer utilities {
   [data-scroll-progress] {
     transform-origin: left center;
@@ -520,4 +555,300 @@ html[data-lang='en'] .lang-switch [data-lang-btn='en'] {
   color: var(--color-navy);
   background: var(--gradient-gold-metallic);
   box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* =================================================================== */
+/* ===== FX — lớp hiệu ứng tương tác cao cấp (con trỏ, nam châm,  ===== */
+/* ===== gợn sóng, nghiêng 3D, spotlight, lưới blueprint, loader) ===== */
+/* Đặt ngoài @layer để luôn thắng độ ưu tiên so với utilities/components. */
+
+/* ---- Con trỏ tùy biến ---- */
+.fx-cursor-dot,
+.fx-cursor-ring,
+.fx-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform;
+}
+.fx-cursor-dot,
+.fx-cursor-ring {
+  z-index: 100;
+}
+.fx-cursor-glow {
+  z-index: 99;
+}
+body.has-custom-cursor .fx-cursor-dot,
+body.has-custom-cursor .fx-cursor-ring {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.fx-cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--color-sky);
+  box-shadow: 0 0 14px rgba(46, 134, 214, 0.7);
+}
+.fx-cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(12, 58, 117, 0.4);
+  transition: border-color 0.25s ease, background 0.25s ease, opacity 0.3s ease;
+}
+body.is-hovering .fx-cursor-ring {
+  border-color: rgba(224, 184, 74, 0.65);
+  background: rgba(224, 184, 74, 0.1);
+}
+/* Quầng sáng đi theo con trỏ — "hold tới đâu sáng tới đó" */
+.fx-cursor-glow {
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(
+    circle,
+    rgba(46, 134, 214, 0.16) 0%,
+    rgba(224, 184, 74, 0.1) 38%,
+    transparent 68%
+  );
+  filter: blur(6px);
+  transition: opacity 0.45s ease;
+}
+body.has-custom-cursor .fx-cursor-glow {
+  opacity: 0.55;
+}
+body.is-hovering .fx-cursor-glow {
+  opacity: 0.95;
+}
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor [data-tilt],
+body.has-custom-cursor [data-magnetic],
+body.has-custom-cursor input,
+body.has-custom-cursor textarea,
+body.has-custom-cursor select,
+body.has-custom-cursor label {
+  cursor: none;
+}
+@media (pointer: coarse) {
+  .fx-cursor-dot,
+  .fx-cursor-ring,
+  .fx-cursor-glow {
+    display: none;
+  }
+}
+
+/* ---- Nút nam châm ---- */
+[data-magnetic] {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+/* ---- Gợn sóng ---- */
+[data-ripple] {
+  position: relative;
+  overflow: hidden;
+}
+.fx-ripple {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  animation: fxRipple 0.65s ease-out forwards;
+}
+/* Nút nền sáng → gợn sóng màu xanh để nhìn rõ */
+.btn-outline-navy .fx-ripple {
+  background: rgba(46, 134, 214, 0.25);
+}
+@keyframes fxRipple {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(22);
+  }
+}
+
+/* ---- Nghiêng 3D ---- */
+[data-tilt] {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ---- Spotlight theo con trỏ ---- */
+[data-spotlight] {
+  position: relative;
+  isolation: isolate;
+}
+[data-spotlight]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(46, 134, 214, 0.12),
+    transparent 22rem
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+[data-spotlight]:hover::after {
+  opacity: 1;
+}
+.bg-gradient-navy[data-spotlight]::after,
+.bg-gradient-navy-deep[data-spotlight]::after,
+.why-ibs-gradient[data-spotlight]::after {
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(128, 187, 223, 0.16),
+    transparent 22rem
+  );
+}
+[data-spotlight] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Lưới điểm blueprint (trong section nền tối) ---- */
+[data-blueprint] {
+  position: relative;
+}
+.fx-blueprint {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.55;
+}
+[data-blueprint] > *:not(.fx-blueprint) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Màn hình chờ (page loader) ---- */
+body.is-loading {
+  overflow: hidden;
+}
+body.is-loading .site-header,
+body.is-loading main {
+  opacity: 0;
+}
+.site-header,
+main {
+  transition: opacity 0.6s ease;
+}
+.fx-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 42%, rgba(46, 134, 214, 0.18), transparent 20rem),
+    linear-gradient(135deg, #061e3d, #0c3a75 55%, #061e3d);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+body.is-loaded .fx-loader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.fx-loader-logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  background: radial-gradient(circle at 32% 22%, rgba(255, 255, 255, 0.28), transparent 32%),
+    linear-gradient(145deg, #061e3d, #1a5ba6 60%, #2e86d6);
+  box-shadow: 0 30px 90px rgba(12, 58, 117, 0.5);
+  animation: fxLoaderFloat 1.8s ease-in-out infinite;
+}
+.fx-loader-logo span {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 0.85;
+}
+.fx-loader-logo small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold-text);
+}
+.fx-loader-ring {
+  position: absolute;
+  inset: -16px;
+  border: 1px solid rgba(128, 187, 223, 0.2);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: fxSpin 1.5s linear infinite;
+}
+.fx-loader-ring.two {
+  inset: -32px;
+  border-top-color: transparent;
+  border-right-color: var(--color-sky);
+  animation-duration: 2.2s;
+  animation-direction: reverse;
+}
+.fx-loader-track {
+  position: absolute;
+  bottom: 14vh;
+  left: 50%;
+  width: min(320px, calc(100% - 48px));
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(128, 187, 223, 0.2);
+  overflow: hidden;
+  transform: translateX(-50%);
+}
+.fx-loader-track span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: var(--gradient-gold-metallic-h);
+  transform: scaleX(0.12);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+@keyframes fxSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fxLoaderFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-cursor-dot,
+  .fx-cursor-ring,
+  .fx-cursor-glow,
+  .fx-blueprint {
+    display: none !important;
+  }
+  [data-tilt],
+  [data-magnetic] {
+    transition: none !important;
+  }
 }

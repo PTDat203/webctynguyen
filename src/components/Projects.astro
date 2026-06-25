@@ -6,7 +6,7 @@ import SectionHeader from './SectionHeader.astro';
 import Icon from './Icon.astro';
 import T from './T.astro';
 ---
-<section id="du-an" class="bg-gradient-paper-soft py-24 md:py-32">
+<section id="du-an" data-spotlight class="bg-gradient-paper-soft py-24 md:py-32">
   <div class="container-ibs">
     <SectionHeader
       overline={ui.projects.overline}
@@ -47,6 +47,8 @@ import T from './T.astro';
         projects.map((p) => (
           <button
             type="button"
+            data-tilt
+            data-ripple
             class="project-card group relative block aspect-[4/3] overflow-hidden rounded-sm bg-navy text-left"
             data-category={p.categoryKey}
             data-title-vi={p.title.vi}
@@ -94,7 +96,7 @@ import T from './T.astro';
       <Icon name="close" class="h-5 w-5" />
     </button>
     <div class="p-6">
-      <span id="lb-cat" class="overline"></span>
+      <span id="lb-cat" class="eyebrow"></span>
       <h3 id="lb-title" class="mt-1.5 font-display text-2xl font-bold"></h3>
       <p id="lb-desc" class="mt-2 font-light text-slate"></p>
     </div>

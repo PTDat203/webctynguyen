@@ -13,12 +13,19 @@ import logo from '../assets/logo-ibs.png';
     <a
       href="#home"
       data-header-logo
+      data-magnetic
       class="flex items-center origin-left"
       data-aria-label-vi={ui.cta.home.vi}
       data-aria-label-en={ui.cta.home.en}
       aria-label={ui.cta.home.vi}
     >
-      <Image src={logo} alt="IBS — International Business Services" class="h-9 w-auto md:h-12" />
+      <Image
+        src={logo}
+        alt="IBS — International Business Services"
+        densities={[1, 1.5, 2]}
+        quality={100}
+        class="h-11 w-auto md:h-14"
+      />
     </a>
 
     <nav class="hidden items-center gap-9 lg:flex" aria-label="Điều hướng chính">
@@ -49,7 +56,7 @@ import logo from '../assets/logo-ibs.png';
         <button type="button" data-lang-btn="en">EN</button>
       </div>
 
-      <a href="#lien-he" class="btn btn-primary hidden sm:inline-flex"><T t={ui.cta.consult} /></a>
+      <a href="#lien-he" data-magnetic data-ripple class="btn btn-primary hidden sm:inline-flex"><T t={ui.cta.consult} /></a>
       <button
         id="menu-toggle"
         type="button"
@@ -81,7 +88,7 @@ import logo from '../assets/logo-ibs.png';
       <a href={company.hotlineHref} data-mobile-link class="flex items-center gap-2 py-3 text-base font-semibold text-navy">
         <Icon name="phone" class="h-5 w-5 text-gold" /> {company.hotline}
       </a>
-      <a href="#lien-he" data-mobile-link class="btn btn-primary mt-3"><T t={ui.cta.consult} /></a>
+      <a href="#lien-he" data-mobile-link data-ripple class="btn btn-primary mt-3"><T t={ui.cta.consult} /></a>
     </nav>
   </div>
 </header>

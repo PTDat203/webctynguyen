@@ -83,8 +83,8 @@ export const ui = {
       en: 'Turnkey solutions for every event',
     } as Bi,
     intro: {
-      vi: 'Một điểm dừng — từ ý tưởng, thiết kế, thi công đến vận hành và truyền thông.',
-      en: 'One stop — from concept, design and construction to operations and communications.',
+      vi: 'Một điểm dừng cho mọi sự kiện: từ ý tưởng, thiết kế, thi công đến vận hành và truyền thông',
+      en: 'One stop for every event: from concept and design to construction, operations and communications',
     } as Bi,
     flagshipBadge: { vi: 'Dịch vụ chủ lực', en: 'Flagship service' } as Bi,
     signature: { vi: 'IBS Signature', en: 'IBS Signature' } as Bi,
@@ -216,7 +216,6 @@ export const services: Service[] = [
       vi: 'Gian tiêu chuẩn · cụm Pavilion · gian đặc biệt',
       en: 'Standard booths · Pavilion clusters · custom booths',
     },
-    featured: true,
     points: [
       {
         vi: 'Báo giá nhanh chóng, cạnh tranh; chính sách giá đặc biệt cho Hội viên IBS',
@@ -285,13 +284,14 @@ export const services: Service[] = [
     no: '04',
     icon: 'flag',
     title: {
-      vi: 'Tổ chức triển lãm, sự kiện trọn gói theo yêu cầu',
-      en: 'Turnkey Exhibition & Event Organization',
+      vi: 'Tổ chức triển lãm trọn gói theo yêu cầu',
+      en: 'Turnkey Exhibition Organization',
     },
     tagline: {
-      vi: 'Quy trình 5 bước — chuẩn quốc tế, từ ý tưởng đến vận hành',
+      vi: 'Quy trình 5 bước chuẩn quốc tế, từ ý tưởng đến vận hành',
       en: 'A 5-step international process, from concept to operation',
     },
+    featured: true,
     points: [
       {
         vi: 'Phân tích & định vị triển lãm: bối cảnh thị trường, mục tiêu, chủ đề & thông điệp',

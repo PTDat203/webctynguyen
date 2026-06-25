@@ -5,7 +5,7 @@ import { heroImage } from '../data/images';
 import Icon from './Icon.astro';
 import T from './T.astro';
 ---
-<section id="home" class="relative isolate flex min-h-[88vh] items-center overflow-hidden bg-navy">
+<section id="home" class="relative isolate flex min-h-[74vh] items-center overflow-hidden bg-navy">
   <div data-hero-image class="hero-ken-burns absolute inset-0 -z-10">
     <Image
       src={heroImage}
@@ -20,13 +20,13 @@ import T from './T.astro';
   <div data-hero-overlay class="hero-gradient-overlay absolute inset-0 -z-10"></div>
   <div class="hero-gradient-vignette absolute inset-0 -z-10"></div>
 
-  <div class="container-ibs py-24">
-    <div class="max-w-2xl">
+  <div class="container-ibs py-16 md:py-20">
+    <div class="max-w-3xl">
       <div class="flex items-center gap-3">
         <span data-hero-gold-line class="gold-line-metallic h-px w-8 origin-left"></span>
         <span data-hero-tagline class="text-sm font-semibold uppercase tracking-[0.2em] text-gold-metallic"><T t={company.tagline} /></span>
       </div>
-      <h1 class="mt-6 font-display text-4xl font-bold leading-[1.25] text-white sm:text-5xl md:text-6xl">
+      <h1 class="mt-6 font-display text-5xl font-bold leading-[1.15] text-white sm:text-6xl md:text-7xl">
         <span class="hero-line block overflow-hidden">
           <span class="hero-line-inner block"
             ><span class="lang-vi">Hệ sinh thái <span class="whitespace-nowrap text-gold-metallic">TRIỂN LÃM</span> toàn diện</span><span class="lang-en">A complete <span class="whitespace-nowrap text-gold-metallic">EXHIBITION</span> ecosystem</span></span
@@ -37,8 +37,8 @@ import T from './T.astro';
         <T t={ui.hero.subline} />
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-5">
-        <a data-hero-cta href="#lien-he" class="btn btn-primary"><T t={ui.cta.consult} /></a>
-        <a data-hero-cta href="#du-an" class="link-arrow text-white">
+        <a data-hero-cta data-magnetic data-ripple href="#lien-he" class="btn btn-primary"><T t={ui.cta.consult} /></a>
+        <a data-hero-cta data-magnetic href="#du-an" class="link-arrow text-white">
           <T t={ui.cta.viewProjects} /> <Icon name="arrow-right" class="h-4 w-4" />
         </a>
       </div>

@@ -9,7 +9,7 @@ import T from './T.astro';
 const featured = services.find((s) => s.featured)!;
 const secondary = services.filter((s) => !s.featured);
 ---
-<section id="dich-vu" class="bg-gradient-paper py-24 md:py-32">
+<section id="dich-vu" data-spotlight class="bg-gradient-paper py-24 md:py-32">
   <div class="container-ibs">
     <SectionHeader
       overline={ui.services.overline}
@@ -41,13 +41,13 @@ const secondary = services.filter((s) => !s.featured);
         </div>
       </div>
       <div class="gradient-featured-panel flex flex-1 flex-col justify-center p-8 md:p-10 lg:p-12">
-        <p class="overline mb-3"><T t={ui.services.signature} /></p>
+        <p class="eyebrow mb-3"><T t={ui.services.signature} /></p>
         <h3 class="font-display text-2xl font-bold leading-snug text-navy md:text-[1.75rem] lg:text-3xl">
           <T t={featured.title} />
         </h3>
         <p class="mt-4 text-base font-light leading-relaxed text-slate md:text-lg"><T t={featured.tagline} /></p>
-        <a href="#lien-he" class="btn btn-primary mt-8 w-fit">
-          <T t={ui.cta.consultBooth} />
+        <a href="#lien-he" data-magnetic data-ripple class="btn btn-primary mt-8 w-fit">
+          <T t={ui.cta.consult} />
         </a>
       </div>
     </article>
@@ -58,6 +58,7 @@ const secondary = services.filter((s) => !s.featured);
         secondary.map((s) => (
           <article
             data-service-card
+            data-tilt
             class="service-secondary group flex flex-col overflow-hidden rounded-sm border border-mist/90 bg-white/80 shadow-sm transition-all duration-300 hover:border-navy/15 hover:bg-white hover:shadow-[var(--shadow-card)]"
           >
             <div class="relative aspect-[16/11] overflow-hidden">

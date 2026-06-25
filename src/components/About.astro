@@ -9,7 +9,7 @@ import T from './T.astro';
   <div class="container-ibs">
     <div class="grid items-center gap-14 lg:grid-cols-2">
       <div data-about-text>
-        <p class="overline mb-5"><T t={ui.about.overline} /></p>
+        <p class="eyebrow mb-5"><T t={ui.about.overline} /></p>
         <h2 class="font-display text-3xl font-bold leading-tight md:text-[2.6rem]">
           <T t={ui.about.title} />
         </h2>
@@ -41,7 +41,7 @@ import T from './T.astro';
     <div class="mt-20 grid gap-px overflow-hidden rounded-sm border border-mist bg-mist md:grid-cols-3">
       {
         values.map((v) => (
-          <div data-value-card class="group bg-white p-8 transition-colors hover:bg-paper">
+          <div data-value-card data-tilt class="group bg-white p-8 transition-colors hover:bg-paper">
             <Icon name={v.icon} draw class="h-8 w-8 text-gold" />
             <h3 class="mt-5 font-display text-lg font-bold"><T t={v.title} /></h3>
             <p class="mt-2.5 text-[0.95rem] font-light leading-relaxed text-slate"><T t={v.body} /></p>

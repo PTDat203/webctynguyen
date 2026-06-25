@@ -24,8 +24,8 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/favicon.png?v=3" />
+    <link rel="apple-touch-icon" href="/favicon.png?v=3" />
     <meta name="theme-color" content="#0c3a75" />
     <script is:inline>
       (function () {
@@ -37,8 +37,39 @@ const { title, description } = Astro.props;
       })();
     </script>
     <Seo title={title} description={description} />
+    <noscript>
+      <style>
+        body.is-loading { overflow: auto !important; }
+        body.is-loading .site-header,
+        body.is-loading main { opacity: 1 !important; }
+        .fx-loader { display: none !important; }
+      </style>
+    </noscript>
   </head>
-  <body>
+  <body class="is-loading">
+    <script is:inline>
+      // An toàn: luôn gỡ trạng thái loading kể cả khi module script lỗi.
+      window.addEventListener('load', function () {
+        window.setTimeout(function () {
+          document.body.classList.remove('is-loading');
+          document.body.classList.add('is-loaded');
+        }, 1200);
+      });
+    </script>
+    <div class="fx-loader" data-loader aria-hidden="true">
+      <div class="fx-loader-logo">
+        <i class="fx-loader-ring"></i>
+        <i class="fx-loader-ring two"></i>
+        <span>IBS</span>
+        <small>Holdings</small>
+      </div>
+      <div class="fx-loader-track"><span data-loader-bar></span></div>
+    </div>
+
+    <div class="fx-cursor-glow" data-cursor-glow aria-hidden="true"></div>
+    <div class="fx-cursor-dot" data-cursor-dot aria-hidden="true"></div>
+    <div class="fx-cursor-ring" data-cursor-ring aria-hidden="true"></div>
+
     <div
       data-scroll-progress
       class="pointer-events-none fixed left-0 top-0 z-[60] h-1 w-full origin-left"
@@ -70,6 +101,7 @@ const { title, description } = Astro.props;
     <script>
       import '../scripts/motion.ts';
       import '../scripts/i18n.ts';
+      import '../scripts/fx.ts';
     </script>
   </body>
 </html>
