@@ -1,22 +1,30 @@
 ---
 // Slogan giá trị cốt lõi — nền xanh đậm, chữ vàng (giảm bớt màu vàng nhưng vẫn nổi bật).
-const parts = ['CHI PHÍ TỐI THIỂU', 'HIỆU QUẢ TỐI ĐA'];
+import { ui } from '../data/site';
+import T from './T.astro';
 ---
-<div data-ribbon class="ribbon-shimmer border-y border-gold/30 bg-navy py-5 md:py-6">
+<div data-ribbon class="ribbon-shimmer border-y py-5 md:py-6">
   <div class="container-ibs flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-center">
-    <span data-ribbon-left class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold md:text-2xl">
-      {parts[0]}
+    <span data-ribbon-left class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold-metallic md:text-2xl">
+      <T t={ui.ribbon.left} />
     </span>
     <svg
       data-ribbon-diamond
-      class="hidden h-2.5 w-2.5 rotate-45 text-gold sm:block"
+      class="hidden h-2.5 w-2.5 rotate-45 sm:block"
       viewBox="0 0 10 10"
       aria-hidden="true"
     >
-      <rect width="10" height="10" fill="currentColor" />
+      <rect width="10" height="10" fill="url(#goldDiamond)" />
+      <defs>
+        <linearGradient id="goldDiamond" x1="0" y1="0" x2="10" y2="10">
+          <stop offset="0%" stop-color="#c9a227" />
+          <stop offset="50%" stop-color="#e8cc72" />
+          <stop offset="100%" stop-color="#c9a227" />
+        </linearGradient>
+      </defs>
     </svg>
-    <span data-ribbon-right class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold md:text-2xl">
-      {parts[1]}
+    <span data-ribbon-right class="font-display text-lg font-extrabold uppercase tracking-[0.12em] text-gold-metallic md:text-2xl">
+      <T t={ui.ribbon.right} />
     </span>
   </div>
 </div>

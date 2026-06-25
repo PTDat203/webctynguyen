@@ -1,7 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import { company, nav } from '../data/site';
+import { company, ui } from '../data/site';
 import Icon from './Icon.astro';
+import T from './T.astro';
 import logo from '../assets/logo-ibs.png';
 ---
 <header
@@ -9,25 +10,32 @@ import logo from '../assets/logo-ibs.png';
   class="sticky top-0 z-50 border-b border-mist bg-white/90 backdrop-blur transition-shadow duration-300"
 >
   <div data-header-inner class="container-ibs flex h-16 items-center justify-between md:h-20">
-    <a href="#home" data-header-logo class="flex items-center origin-left" aria-label="IBS — Trang chủ">
+    <a
+      href="#home"
+      data-header-logo
+      class="flex items-center origin-left"
+      data-aria-label-vi={ui.cta.home.vi}
+      data-aria-label-en={ui.cta.home.en}
+      aria-label={ui.cta.home.vi}
+    >
       <Image src={logo} alt="IBS — International Business Services" class="h-9 w-auto md:h-12" />
     </a>
 
     <nav class="hidden items-center gap-9 lg:flex" aria-label="Điều hướng chính">
       {
-        nav.map((item) => (
+        ui.nav.map((item) => (
           <a
             href={item.href}
             data-nav-link
             class="nav-link relative py-2 text-[0.92rem] font-medium text-navy/75 transition-colors hover:text-navy"
           >
-            {item.label}
+            <T t={item.label} />
           </a>
         ))
       }
     </nav>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3 md:gap-4">
       <a
         href={company.hotlineHref}
         class="hidden items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-gold xl:inline-flex"
@@ -35,12 +43,20 @@ import logo from '../assets/logo-ibs.png';
         <Icon name="phone" class="h-4 w-4 text-gold" />
         {company.hotline}
       </a>
-      <a href="#lien-he" class="btn btn-primary hidden sm:inline-flex">Nhận tư vấn</a>
+
+      <div class="lang-switch" role="group" aria-label="Language / Ngôn ngữ">
+        <button type="button" data-lang-btn="vi">VN</button>
+        <button type="button" data-lang-btn="en">EN</button>
+      </div>
+
+      <a href="#lien-he" class="btn btn-primary hidden sm:inline-flex"><T t={ui.cta.consult} /></a>
       <button
         id="menu-toggle"
         type="button"
         class="grid h-10 w-10 place-items-center rounded text-navy lg:hidden"
-        aria-label="Mở menu"
+        data-aria-label-vi={ui.cta.openMenu.vi}
+        data-aria-label-en={ui.cta.openMenu.en}
+        aria-label={ui.cta.openMenu.vi}
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
@@ -52,20 +68,20 @@ import logo from '../assets/logo-ibs.png';
   <div id="mobile-menu" class="hidden border-t border-mist bg-white lg:hidden">
     <nav class="container-ibs flex flex-col py-3" aria-label="Điều hướng di động">
       {
-        nav.map((item) => (
+        ui.nav.map((item) => (
           <a
             href={item.href}
             data-mobile-link
             class="border-b border-mist py-3 text-base font-medium text-navy/85"
           >
-            {item.label}
+            <T t={item.label} />
           </a>
         ))
       }
       <a href={company.hotlineHref} data-mobile-link class="flex items-center gap-2 py-3 text-base font-semibold text-navy">
         <Icon name="phone" class="h-5 w-5 text-gold" /> {company.hotline}
       </a>
-      <a href="#lien-he" data-mobile-link class="btn btn-primary mt-3">Nhận tư vấn</a>
+      <a href="#lien-he" data-mobile-link class="btn btn-primary mt-3"><T t={ui.cta.consult} /></a>
     </nav>
   </div>
 </header>
@@ -78,7 +94,7 @@ import logo from '../assets/logo-ibs.png';
     bottom: -1px;
     height: 2px;
     width: 100%;
-    background: var(--color-gold);
+    background: var(--gradient-gold-metallic-h);
     transform: scaleX(0);
     transform-origin: center center;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -96,7 +112,8 @@ import logo from '../assets/logo-ibs.png';
     if (!menu || !toggle) return;
     menu.classList.toggle('hidden', !open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+    const en = document.documentElement.getAttribute('data-lang') === 'en';
+    toggle.setAttribute('aria-label', open ? (en ? 'Close menu' : 'Đóng menu') : (en ? 'Open menu' : 'Mở menu'));
     if (icon) {
       icon.innerHTML = open
         ? '<path d="M6 6l12 12M18 6 6 18"/>'

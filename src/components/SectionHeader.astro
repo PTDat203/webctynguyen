@@ -1,8 +1,11 @@
 ---
+import type { Bi } from '../data/site';
+import T from './T.astro';
+
 interface Props {
-  overline?: string;
-  title: string;
-  intro?: string;
+  overline?: Bi;
+  title: Bi;
+  intro?: Bi;
   align?: 'left' | 'center';
   light?: boolean;
 }
@@ -11,12 +14,12 @@ const alignClass = align === 'center' ? 'mx-auto text-center' : 'text-left';
 const dividerClass = align === 'center' ? 'mx-auto' : '';
 ---
 <div data-section-header class={`max-w-2xl ${alignClass}`}>
-  {overline && <p class="section-overline overline mb-4">{overline}</p>}
+  {overline && <p class="section-overline overline mb-4"><T t={overline} /></p>}
   <h2 class={`section-title font-display text-3xl font-bold leading-tight md:text-[2.5rem] ${light ? 'text-white' : ''}`}>
-    {title}
+    <T t={title} />
   </h2>
-  <span class={`section-divider mt-5 block h-px w-16 origin-center bg-gold ${dividerClass}`}></span>
+  <span class={`section-divider gold-line-metallic mt-5 block h-px w-16 origin-center ${dividerClass}`}></span>
   {intro && (
-    <p class={`section-intro mt-6 text-lg font-light leading-relaxed ${light ? 'text-white/70' : 'text-slate'}`}>{intro}</p>
+    <p class={`section-intro mt-6 text-lg font-light leading-relaxed ${light ? 'text-white/70' : 'text-slate'}`}><T t={intro} /></p>
   )}
 </div>

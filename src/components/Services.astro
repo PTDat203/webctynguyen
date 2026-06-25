@@ -1,52 +1,53 @@
 ---
 import { Image } from 'astro:assets';
-import { services } from '../data/site';
+import { services, ui } from '../data/site';
 import { serviceImages } from '../data/images';
 import SectionHeader from './SectionHeader.astro';
 import Icon from './Icon.astro';
+import T from './T.astro';
 
 const featured = services.find((s) => s.featured)!;
 const secondary = services.filter((s) => !s.featured);
 ---
-<section id="dich-vu" class="bg-paper py-24 md:py-32">
+<section id="dich-vu" class="bg-gradient-paper py-24 md:py-32">
   <div class="container-ibs">
     <SectionHeader
-      overline="Dịch vụ"
-      title="Giải pháp trọn gói cho mọi sự kiện"
-      intro="Một điểm dừng — từ ý tưởng, thiết kế, thi công đến vận hành và truyền thông."
+      overline={ui.services.overline}
+      title={ui.services.title}
+      intro={ui.services.intro}
     />
 
     <!-- Dịch vụ chủ lực -->
     <article
       data-service-card
       data-service-featured
-      class="service-featured group mt-14 flex flex-col overflow-hidden rounded-sm border-2 border-gold bg-white shadow-[0_20px_50px_rgba(12,58,117,0.14)] lg:flex-row"
+      class="service-featured border-gold-metallic group mt-14 flex flex-col overflow-hidden rounded-sm shadow-[0_20px_50px_rgba(12,58,117,0.14)] lg:flex-row"
     >
       <div class="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:w-[58%] lg:min-h-[320px]">
         <Image
           src={serviceImages[featured.id]}
-          alt={featured.title}
+          alt={featured.title.vi}
           widths={[640, 960, 1280]}
           sizes="(min-width:1024px) 58vw, 100vw"
           class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/25 to-navy/10 lg:bg-gradient-to-r lg:from-transparent lg:via-navy/20 lg:to-navy/50"></div>
+        <div class="gradient-featured-image absolute inset-0"></div>
         <span class="absolute right-5 top-4 font-display text-7xl font-bold text-white/20 md:text-8xl">{featured.no}</span>
-        <span class="absolute left-4 top-4 rounded-sm bg-gold px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-white shadow-md">
-          Dịch vụ chủ lực
+        <span class="absolute left-4 top-4 rounded-sm bg-gold px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-navy shadow-md">
+          <T t={ui.services.flagshipBadge} />
         </span>
-        <div data-service-icon class="absolute bottom-4 left-4 grid h-14 w-14 place-items-center rounded-sm bg-gold text-white shadow-lg">
+        <div data-service-icon class="absolute bottom-4 left-4 grid h-14 w-14 place-items-center rounded-sm bg-gold text-navy shadow-lg">
           <Icon name={featured.icon} class="h-7 w-7" />
         </div>
       </div>
-      <div class="flex flex-1 flex-col justify-center p-8 md:p-10 lg:p-12">
-        <p class="overline mb-3">IBS Signature</p>
+      <div class="gradient-featured-panel flex flex-1 flex-col justify-center p-8 md:p-10 lg:p-12">
+        <p class="overline mb-3"><T t={ui.services.signature} /></p>
         <h3 class="font-display text-2xl font-bold leading-snug text-navy md:text-[1.75rem] lg:text-3xl">
-          {featured.title}
+          <T t={featured.title} />
         </h3>
-        <p class="mt-4 text-base font-light leading-relaxed text-slate md:text-lg">{featured.tagline}</p>
+        <p class="mt-4 text-base font-light leading-relaxed text-slate md:text-lg"><T t={featured.tagline} /></p>
         <a href="#lien-he" class="btn btn-primary mt-8 w-fit">
-          Nhận tư vấn gian hàng
+          <T t={ui.cta.consultBooth} />
         </a>
       </div>
     </article>
@@ -62,22 +63,22 @@ const secondary = services.filter((s) => !s.featured);
             <div class="relative aspect-[16/11] overflow-hidden">
               <Image
                 src={serviceImages[s.id]}
-                alt={s.title}
+                alt={s.title.vi}
                 widths={[320, 480]}
                 sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
                 class="service-secondary-img absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-navy/70 via-navy/15 to-transparent"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-navy/75 via-navy/20 to-gold/5"></div>
               <span class="absolute right-3 top-2 font-display text-3xl font-bold text-white/20">{s.no}</span>
               <div class="absolute bottom-3 left-3 grid h-9 w-9 place-items-center rounded-sm bg-navy/85 text-gold">
                 <Icon name={s.icon} class="h-4 w-4" />
               </div>
             </div>
             <div class="flex flex-1 flex-col p-4 md:p-5">
-              <h3 class="font-display text-[0.95rem] font-semibold leading-snug text-navy/90">{s.title}</h3>
-              <p class="mt-2 flex-1 text-xs font-light leading-relaxed text-slate/80">{s.tagline}</p>
+              <h3 class="font-display text-[0.95rem] font-semibold leading-snug text-navy/90"><T t={s.title} /></h3>
+              <p class="mt-2 flex-1 text-xs font-light leading-relaxed text-slate/80"><T t={s.tagline} /></p>
               <a href="#lien-he" class="link-arrow mt-4 text-[0.65rem] text-navy/70">
-                Tìm hiểu thêm <Icon name="arrow-right" class="h-3.5 w-3.5" />
+                <T t={ui.cta.learnMore} /> <Icon name="arrow-right" class="h-3.5 w-3.5" />
               </a>
             </div>
           </article>

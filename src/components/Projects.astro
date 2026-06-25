@@ -1,15 +1,16 @@
 ---
 import { Image } from 'astro:assets';
-import { projects, projectFilters } from '../data/site';
+import { projects, projectFilters, ui } from '../data/site';
 import { projectImages } from '../data/images';
 import SectionHeader from './SectionHeader.astro';
 import Icon from './Icon.astro';
+import T from './T.astro';
 ---
-<section id="du-an" class="bg-white py-24 md:py-32">
+<section id="du-an" class="bg-gradient-paper-soft py-24 md:py-32">
   <div class="container-ibs">
     <SectionHeader
-      overline="Dự án tiêu biểu"
-      title="Những dấu ấn IBS đã kiến tạo"
+      overline={ui.projects.overline}
+      title={ui.projects.title}
     />
 
     <div
@@ -27,15 +28,15 @@ import Icon from './Icon.astro';
         projectFilters.map((f, i) => (
           <button
             type="button"
-            data-filter={f}
+            data-filter={f.key}
             class:list={[
               'relative z-[1] rounded-full border px-5 py-2 text-sm font-medium transition-colors',
               i === 0
-                ? 'border-gold bg-gold text-white'
+                ? 'border-gold bg-gold text-navy'
                 : 'border-mist text-slate hover:border-navy hover:text-navy',
             ]}
           >
-            {f}
+            <T t={f.label} />
           </button>
         ))
       }
@@ -47,30 +48,34 @@ import Icon from './Icon.astro';
           <button
             type="button"
             class="project-card group relative block aspect-[4/3] overflow-hidden rounded-sm bg-navy text-left"
-            data-category={p.category}
-            data-title={p.title}
-            data-desc={p.desc}
+            data-category={p.categoryKey}
+            data-title-vi={p.title.vi}
+            data-title-en={p.title.en}
+            data-desc-vi={p.desc.vi}
+            data-desc-en={p.desc.en}
+            data-cat-vi={p.category.vi}
+            data-cat-en={p.category.en}
           >
             <Image
-              src={projectImages[p.title]}
-              alt={p.title}
+              src={projectImages[p.title.vi]}
+              alt={p.title.vi}
               widths={[400, 800]}
               sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/10 to-transparent"></div>
-            <span class="absolute left-4 top-4 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-gold">
-              {p.category}
+            <span class="absolute left-4 top-4 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-gold-metallic">
+              <T t={p.category} />
             </span>
             <div class="absolute inset-x-0 bottom-0 p-5">
-              <h3 class="font-display text-lg font-semibold text-white">{p.title}</h3>
+              <h3 class="font-display text-lg font-semibold text-white"><T t={p.title} /></h3>
             </div>
           </button>
         ))
       }
     </div>
 
-    <p id="project-empty" class="mt-10 hidden text-center text-slate">Chưa có dự án trong nhóm này.</p>
+    <p id="project-empty" class="mt-10 hidden text-center text-slate"><T t={ui.projects.empty} /></p>
   </div>
 </section>
 
@@ -79,11 +84,13 @@ import Icon from './Icon.astro';
   class="fixed inset-0 z-[90] hidden items-center justify-center bg-navy/85 p-4 backdrop-blur"
   role="dialog"
   aria-modal="true"
-  aria-label="Chi tiết dự án"
+  data-aria-label-vi={ui.projects.detail.vi}
+  data-aria-label-en={ui.projects.detail.en}
+  aria-label={ui.projects.detail.vi}
 >
   <div data-lb-panel class="relative w-full max-w-2xl overflow-hidden rounded-sm bg-white">
     <div id="lb-media" class="aspect-video w-full bg-navy"></div>
-    <button id="lb-close" type="button" class="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-navy shadow" aria-label="Đóng">
+    <button id="lb-close" type="button" class="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-navy shadow" data-aria-label-vi={ui.projects.close.vi} data-aria-label-en={ui.projects.close.en} aria-label={ui.projects.close.vi}>
       <Icon name="close" class="h-5 w-5" />
     </button>
     <div class="p-6">

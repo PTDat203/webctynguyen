@@ -1,0 +1,13 @@
+---
+// Hiển thị song ngữ: render cả 2 ngôn ngữ, CSS ẩn/hiện theo [data-lang] trên <html>.
+import type { Bi } from '../data/site';
+
+interface Props {
+  t: Bi;
+  class?: string;
+}
+const { t, class: className } = Astro.props;
+---
+<span class:list={['i18n', className]}
+  ><span class="lang-vi">{t.vi}</span><span class="lang-en">{t.en}</span></span
+>

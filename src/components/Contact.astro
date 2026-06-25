@@ -1,20 +1,21 @@
 ---
-import { company, services } from '../data/site';
+import { company, services, ui } from '../data/site';
 import Icon from './Icon.astro';
+import T from './T.astro';
 const mapSrc =
   'https://www.google.com/maps?q=' +
   encodeURIComponent('41A Lý Thái Tổ, Hoàn Kiếm, Hà Nội') +
   '&output=embed';
 ---
-<section id="lien-he" class="bg-navy py-24 md:py-32">
+<section id="lien-he" class="bg-gradient-navy gradient-accent-top py-24 md:py-32">
   <div class="container-ibs">
     <div data-contact-header class="mx-auto max-w-2xl text-center">
       <p class="overline">{company.oneStop}</p>
       <h2 class="mt-4 font-display text-3xl font-bold text-white md:text-[2.5rem]">
-        Sẵn sàng nâng tầm triển lãm của bạn?
+        <T t={ui.contact.title} />
       </h2>
       <p class="mt-5 text-lg font-light text-white/70">
-        Để lại thông tin — đội ngũ IBS sẽ tư vấn &amp; báo giá nhanh chóng, miễn phí.
+        <T t={ui.contact.sub} />
       </p>
     </div>
 
@@ -26,8 +27,8 @@ const mapSrc =
               <Icon name="map-pin" class="h-5 w-5" />
             </span>
             <div>
-              <p class="text-sm font-semibold text-white">Địa chỉ</p>
-              <p class="text-sm font-light text-white/70">{company.address}</p>
+              <p class="text-sm font-semibold text-white"><T t={ui.contact.addressLabel} /></p>
+              <p class="text-sm font-light text-white/70"><T t={company.address} /></p>
             </div>
           </li>
           <li data-contact-info class="flex items-start gap-4">
@@ -35,7 +36,7 @@ const mapSrc =
               <Icon name="phone" class="h-5 w-5" />
             </span>
             <div>
-              <p class="text-sm font-semibold text-white">Hotline ({company.hotlineNote})</p>
+              <p class="text-sm font-semibold text-white"><T t={ui.contact.hotlineLabel} /> (<T t={company.hotlineNote} />)</p>
               <a href={company.hotlineHref} class="text-sm font-light text-white/70 transition-colors hover:text-gold">{company.hotline}</a>
             </div>
           </li>
@@ -73,44 +74,44 @@ const mapSrc =
 
           <div data-form-field class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="name" class="mb-1.5 block text-sm font-medium text-ink">Họ và tên *</label>
-              <input id="name" name="name" type="text" required class="form-field" placeholder="Nguyễn Văn A" />
+              <label for="name" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formName} /></label>
+              <input id="name" name="name" type="text" required class="form-field" placeholder={ui.contact.phName.vi} data-placeholder-vi={ui.contact.phName.vi} data-placeholder-en={ui.contact.phName.en} />
             </div>
             <div>
-              <label for="company" class="mb-1.5 block text-sm font-medium text-ink">Công ty</label>
-              <input id="company" name="company" type="text" class="form-field" placeholder="Tên doanh nghiệp" />
+              <label for="company" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formCompany} /></label>
+              <input id="company" name="company" type="text" class="form-field" placeholder={ui.contact.phCompany.vi} data-placeholder-vi={ui.contact.phCompany.vi} data-placeholder-en={ui.contact.phCompany.en} />
             </div>
           </div>
 
           <div data-form-field class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="email" class="mb-1.5 block text-sm font-medium text-ink">Email *</label>
-              <input id="email" name="email" type="email" required class="form-field" placeholder="email@congty.com" />
+              <label for="email" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formEmail} /></label>
+              <input id="email" name="email" type="email" required class="form-field" placeholder={ui.contact.phEmail.vi} data-placeholder-vi={ui.contact.phEmail.vi} data-placeholder-en={ui.contact.phEmail.en} />
             </div>
             <div>
-              <label for="phone" class="mb-1.5 block text-sm font-medium text-ink">Số điện thoại *</label>
-              <input id="phone" name="phone" type="tel" required class="form-field" placeholder="09xx xxx xxx" />
+              <label for="phone" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formPhone} /></label>
+              <input id="phone" name="phone" type="tel" required class="form-field" placeholder={ui.contact.phPhone.vi} data-placeholder-vi={ui.contact.phPhone.vi} data-placeholder-en={ui.contact.phPhone.en} />
             </div>
           </div>
 
           <div data-form-field>
-            <label for="service" class="mb-1.5 block text-sm font-medium text-ink">Dịch vụ quan tâm</label>
+            <label for="service" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formService} /></label>
             <select id="service" name="service" class="form-field">
-              <option value="">— Chọn dịch vụ —</option>
-              {services.map((s) => <option value={s.title}>{s.title}</option>)}
-              <option value="Khác">Khác</option>
+              <option value="" data-vi={ui.contact.formServicePlaceholder.vi} data-en={ui.contact.formServicePlaceholder.en}>{ui.contact.formServicePlaceholder.vi}</option>
+              {services.map((s) => <option value={s.title.vi} data-vi={s.title.vi} data-en={s.title.en}>{s.title.vi}</option>)}
+              <option value="Khác" data-vi={ui.contact.formServiceOther.vi} data-en={ui.contact.formServiceOther.en}>{ui.contact.formServiceOther.vi}</option>
             </select>
           </div>
 
           <div data-form-field>
-            <label for="message" class="mb-1.5 block text-sm font-medium text-ink">Nội dung</label>
-            <textarea id="message" name="message" rows="4" class="form-field" placeholder="Mô tả ngắn về nhu cầu của bạn..."></textarea>
+            <label for="message" class="mb-1.5 block text-sm font-medium text-ink"><T t={ui.contact.formMessage} /></label>
+            <textarea id="message" name="message" rows="4" class="form-field" placeholder={ui.contact.phMessage.vi} data-placeholder-vi={ui.contact.phMessage.vi} data-placeholder-en={ui.contact.phMessage.en}></textarea>
           </div>
 
           <div data-form-field>
-            <button type="submit" class="btn btn-primary btn-glow w-full">Gửi yêu cầu tư vấn</button>
+            <button type="submit" class="btn btn-primary btn-glow w-full"><T t={ui.contact.submit} /></button>
             <p class="text-center text-xs font-light text-slate">
-              Hoặc gọi ngay <a href={company.hotlineHref} class="font-semibold text-navy hover:text-gold">{company.hotline}</a>
+              <T t={ui.contact.orCall} /> <a href={company.hotlineHref} class="font-semibold text-navy hover:text-gold">{company.hotline}</a>
             </p>
           </div>
         </form>

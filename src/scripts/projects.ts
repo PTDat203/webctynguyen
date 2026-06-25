@@ -18,7 +18,7 @@ export function initProjects() {
     buttons.forEach((b) => {
       const active = b === btn;
       b.classList.toggle('bg-gold', active);
-      b.classList.toggle('text-white', active);
+      b.classList.toggle('text-navy', active);
       b.classList.toggle('border-gold', active);
       b.classList.toggle('text-slate', !active);
       b.classList.toggle('border-mist', !active);
@@ -26,19 +26,22 @@ export function initProjects() {
     });
   };
 
+  const matches = (c: HTMLElement, filter: string) =>
+    filter === 'all' || c.dataset.category === filter;
+
   const animateFilter = (filter: string) => {
     const toHide = cards.filter((c) => {
-      const show = filter === 'Tất cả' || c.dataset.category === filter;
+      const show = matches(c, filter);
       return !show && !c.classList.contains('hidden');
     });
     const toShow = cards.filter((c) => {
-      const show = filter === 'Tất cả' || c.dataset.category === filter;
+      const show = matches(c, filter);
       return show && c.classList.contains('hidden');
     });
 
     if (reduced()) {
       cards.forEach((c) => {
-        const show = filter === 'Tất cả' || c.dataset.category === filter;
+        const show = matches(c, filter);
         c.classList.toggle('hidden', !show);
         gsap.set(c, { autoAlpha: 1, scale: 1 });
       });
@@ -78,7 +81,7 @@ export function initProjects() {
       );
     }
 
-    const visible = cards.filter((c) => filter === 'Tất cả' || c.dataset.category === filter).length;
+    const visible = cards.filter((c) => matches(c, filter)).length;
     empty?.classList.toggle('hidden', visible !== 0);
   };
 
@@ -103,7 +106,7 @@ export function initProjects() {
         }
       }
 
-      animateFilter(btn.dataset.filter || 'Tất cả');
+      animateFilter(btn.dataset.filter || 'all');
     });
   });
 
@@ -119,9 +122,12 @@ export function initProjects() {
   const openLb = (c: HTMLElement) => {
     if (!lb || !lbPanel) return;
 
-    if (lbCat) lbCat.textContent = c.dataset.category || '';
-    if (lbTitle) lbTitle.textContent = c.dataset.title || '';
-    if (lbDesc) lbDesc.textContent = c.dataset.desc || '';
+    const lang = document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'vi';
+    const pick = (name: string) =>
+      c.getAttribute(`data-${name}-${lang}`) || c.getAttribute(`data-${name}-vi`) || '';
+    if (lbCat) lbCat.textContent = pick('cat');
+    if (lbTitle) lbTitle.textContent = pick('title');
+    if (lbDesc) lbDesc.textContent = pick('desc');
     const cardImg = c.querySelector('img');
     const src = cardImg ? cardImg.currentSrc || cardImg.src : '';
     if (lbMedia) {

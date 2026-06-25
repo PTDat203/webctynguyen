@@ -1,15 +1,16 @@
 ---
-import { whyIbs } from '../data/site';
+import { whyIbs, ui } from '../data/site';
 import Icon from './Icon.astro';
+import T from './T.astro';
 ---
-<section data-why-ibs class="why-ibs-gradient bg-navy py-24 md:py-28">
+<section data-why-ibs class="why-ibs-gradient gradient-accent-top py-24 md:py-28">
   <div class="container-ibs">
     <div data-section-header class="mx-auto max-w-2xl text-center">
-      <p class="section-overline overline mb-4">Vì sao chọn IBS</p>
+      <p class="section-overline overline mb-4"><T t={ui.whyIbs.overline} /></p>
       <h2 class="section-title font-display text-3xl font-bold text-white md:text-[2.4rem]">
-        Chi phí tối thiểu — Hiệu quả tối đa
+        <T t={ui.whyIbs.title} />
       </h2>
-      <span class="section-divider mx-auto mt-5 block h-px w-16 origin-center bg-gold"></span>
+      <span class="section-divider gold-line-metallic mx-auto mt-5 block h-px w-16 origin-center"></span>
     </div>
 
     <div class="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -19,8 +20,8 @@ import Icon from './Icon.astro';
             <div data-why-circle class="mx-auto grid h-14 w-14 place-items-center rounded-full border border-gold/40 text-gold">
               <Icon name={w.icon} draw class="h-7 w-7" />
             </div>
-            <h3 data-why-title class="mt-6 font-display text-lg font-semibold text-white">{w.title}</h3>
-            <p data-why-body class="mt-2.5 text-sm font-light leading-relaxed text-white/65">{w.body}</p>
+            <h3 data-why-title class="mt-6 font-display text-lg font-semibold text-white"><T t={w.title} /></h3>
+            <p data-why-body class="mt-2.5 text-sm font-light leading-relaxed text-white/65"><T t={w.body} /></p>
           </div>
         ))
       }

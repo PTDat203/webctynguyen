@@ -16,8 +16,108 @@
   --color-indigo: #1a5ba6;   /* xanh trung gian — dùng cho gradient */
   --color-sky: #2e86d6;      /* xanh dương sáng — điểm nhấn */
   --color-skylight: #80bbdf; /* xanh nhạt theo logo */
-  --color-gold: #e0a82e;     /* vàng gold ấm */
-  --color-amber: #f2c94c;    /* vàng sáng — hover/điểm nhấn */
+  --color-gold: #e0b84a;     /* vàng gold ấm — nhẹ, dễ đọc */
+  --color-gold-light: #edd896;
+  --color-gold-dark: #a8841f;
+  --color-gold-text: #e6bd4f; /* chữ trên nền tối — vàng đậm, rõ hơn */
+  --color-gold-text-dark: #b58923; /* chữ trên nền sáng */
+  --color-amber: #f0d88a;
+
+  --gradient-gold-metallic: linear-gradient(
+    135deg,
+    #c9a227 0%,
+    #d4af37 25%,
+    #e8cc72 50%,
+    #d4af37 75%,
+    #c9a227 100%
+  );
+  --gradient-gold-metallic-h: linear-gradient(
+    90deg,
+    #c9a227 0%,
+    #ddb84a 30%,
+    #e8cc72 50%,
+    #ddb84a 70%,
+    #c9a227 100%
+  );
+  --gradient-gold-shine: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  --shadow-gold: 0 3px 12px rgba(169, 132, 31, 0.22);
+  --shadow-gold-lg: 0 6px 20px rgba(169, 132, 31, 0.28);
+
+  --gradient-navy: linear-gradient(
+    135deg,
+    #061e3d 0%,
+    #0c3a75 28%,
+    #1a5ba6 55%,
+    #0c3a75 78%,
+    #082952 100%
+  );
+  --gradient-navy-deep: linear-gradient(
+    160deg,
+    #041528 0%,
+    #0c3a75 35%,
+    #0a3268 65%,
+    #061e3d 100%
+  );
+  --gradient-navy-radial: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    rgba(46, 134, 214, 0.22) 0%,
+    transparent 70%
+  );
+  --gradient-paper: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f6f8fb 45%,
+    #eef2f8 100%
+  );
+  --gradient-paper-soft: linear-gradient(
+    135deg,
+    #f6f8fb 0%,
+    #ffffff 50%,
+    #f0f4fa 100%
+  );
+  --gradient-gold-navy: linear-gradient(
+    90deg,
+    #061e3d 0%,
+    #0c3a75 20%,
+    #1a5ba6 40%,
+    rgba(212, 175, 55, 0.35) 50%,
+    #1a5ba6 60%,
+    #0c3a75 80%,
+    #061e3d 100%
+  );
+  --gradient-hero-overlay: linear-gradient(
+    115deg,
+    rgba(6, 30, 61, 0.92) 0%,
+    rgba(12, 58, 117, 0.72) 40%,
+    rgba(26, 91, 166, 0.35) 70%,
+    rgba(12, 58, 117, 0.15) 100%
+  );
+  --gradient-hero-vignette: linear-gradient(
+    to top,
+    rgba(6, 30, 61, 0.85) 0%,
+    rgba(12, 58, 117, 0.25) 45%,
+    transparent 100%
+  );
+  --gradient-featured-panel: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #fafbfd 40%,
+    #f3f6fb 100%
+  );
+  --gradient-gold-accent-top: linear-gradient(
+    90deg,
+    transparent 0%,
+    #e8cc72 25%,
+    #ddb84a 50%,
+    #e8cc72 75%,
+    transparent 100%
+  );
+
   --color-ink: #15181e;
   --color-slate: #5b6472;
   --color-mist: #e6e9ef;
@@ -56,7 +156,7 @@
   section[id] { scroll-margin-top: 84px; }
 
   ::selection {
-    background: var(--color-gold);
+    background: var(--color-gold-dark);
     color: #fff;
   }
 
@@ -73,7 +173,9 @@
       transition-duration: 0.001ms !important;
     }
     .ribbon-shimmer,
-    .why-ibs-gradient {
+    .why-ibs-gradient,
+    .bg-gradient-navy,
+    .bg-gradient-navy-deep {
       animation: none !important;
     }
   }
@@ -94,7 +196,102 @@
     font-size: 0.75rem;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--color-gold);
+    color: var(--color-gold-text-dark);
+  }
+  .bg-gradient-navy .overline,
+  .bg-gradient-navy-deep .overline,
+  .why-ibs-gradient .overline,
+  #lien-he .overline {
+    color: var(--color-gold-text);
+  }
+
+  /* Vàng metallic — nhẹ, không chói */
+  .bg-gold-metallic {
+    background: var(--gradient-gold-metallic);
+    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  .bg-gold-metallic-h {
+    background: var(--gradient-gold-metallic-h);
+    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .text-gold-metallic {
+    color: var(--color-gold-text);
+  }
+  .border-gold-metallic {
+    border: 2px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      var(--gradient-gold-metallic) border-box;
+  }
+  .gold-line-metallic {
+    background: var(--gradient-gold-metallic-h);
+    box-shadow: none;
+  }
+
+  /* Gradient nền section */
+  .bg-gradient-navy {
+    background: var(--gradient-navy);
+    position: relative;
+  }
+  .bg-gradient-navy-deep {
+    background: var(--gradient-navy-deep);
+    position: relative;
+  }
+  .bg-gradient-navy > *,
+  .bg-gradient-navy-deep > * {
+    position: relative;
+    z-index: 1;
+  }
+  .bg-gradient-paper {
+    background: var(--gradient-paper);
+  }
+  .bg-gradient-paper-soft {
+    background: var(--gradient-paper-soft);
+  }
+  .bg-gradient-navy::before,
+  .bg-gradient-navy-deep::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-navy-radial);
+    pointer-events: none;
+  }
+  .gradient-accent-top {
+    position: relative;
+  }
+  .gradient-accent-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-gold-accent-top);
+    pointer-events: none;
+  }
+  .hero-gradient-overlay {
+    background: var(--gradient-hero-overlay);
+  }
+  .hero-gradient-vignette {
+    background: var(--gradient-hero-vignette);
+  }
+  .gradient-featured-panel {
+    background: var(--gradient-featured-panel);
+  }
+  .gradient-featured-image {
+    background: linear-gradient(
+      to top,
+      rgba(6, 30, 61, 0.88) 0%,
+      rgba(12, 58, 117, 0.35) 45%,
+      rgba(212, 175, 55, 0.1) 100%
+    );
+  }
+  @media (min-width: 1024px) {
+    .gradient-featured-image {
+      background:
+        linear-gradient(to right, transparent 0%, rgba(12, 58, 117, 0.15) 55%, rgba(6, 30, 61, 0.5) 100%),
+        linear-gradient(to top, rgba(6, 30, 61, 0.7) 0%, transparent 55%);
+    }
   }
 
   /* Buttons */
@@ -116,14 +313,32 @@
     white-space: nowrap;
   }
   .btn-primary {
-    background: var(--color-gold);
-    color: #fff;
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-gold-metallic);
+    color: var(--color-navy);
+    font-weight: 700;
+    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(169, 132, 31, 0.35);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-gold-shine);
+    pointer-events: none;
   }
   .btn-primary:hover {
-    background: var(--color-amber);
+    background: linear-gradient(
+      135deg,
+      #c9a227 0%,
+      #e0b84a 35%,
+      #edd896 55%,
+      #e0b84a 100%
+    );
     color: var(--color-navy);
     transform: translateY(-2px);
-    box-shadow: 0 12px 26px rgba(224, 168, 46, 0.32);
+    box-shadow: var(--shadow-gold-lg), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
   .btn-outline {
     border: 1px solid rgba(255, 255, 255, 0.7);
@@ -156,7 +371,10 @@
     color: var(--color-navy);
     transition: gap 0.2s ease, color 0.2s ease;
   }
-  .link-arrow:hover { color: var(--color-gold); gap: 0.85rem; }
+  .link-arrow:hover {
+    color: var(--color-gold-dark);
+    gap: 0.85rem;
+  }
 
   /* Reveal-on-scroll — fallback khi JS chưa load / reduced motion */
   .reveal {
@@ -176,22 +394,18 @@
   .hero-ken-burns { will-change: transform; }
 
   .ribbon-shimmer {
-    background-image: linear-gradient(
-      90deg,
-      var(--color-navy) 0%,
-      var(--color-navy) 40%,
-      rgba(224, 168, 46, 0.08) 50%,
-      var(--color-navy) 60%,
-      var(--color-navy) 100%
-    );
+    background: var(--gradient-gold-navy);
     background-size: 200% 100%;
-    animation: goldShimmer 8s ease-in-out infinite;
+    animation: goldShimmer 10s ease-in-out infinite;
+    border-color: rgba(212, 175, 55, 0.25);
   }
 
   .why-ibs-gradient {
-    background: linear-gradient(135deg, #0c3a75 0%, #0a3268 50%, #0c3a75 100%);
-    background-size: 200% 200%;
-    animation: gradientShift 18s ease infinite;
+    background:
+      var(--gradient-navy-radial),
+      linear-gradient(145deg, #061e3d 0%, #0c3a75 30%, #1a5ba6 55%, #0a3268 80%, #061e3d 100%);
+    background-size: 100% 100%, 220% 220%;
+    animation: gradientShift 20s ease infinite;
   }
 
   .icon-draw path,
@@ -215,7 +429,7 @@
       background: transparent !important;
     }
     [data-project-filters].pill-ready [data-filter].is-filter-active {
-      color: #fff;
+      color: var(--color-navy);
       border-color: var(--color-gold);
     }
   }
@@ -252,12 +466,58 @@
 }
 
 @keyframes btnGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(224, 168, 46, 0.35); }
-  50% { box-shadow: 0 0 20px 4px rgba(224, 168, 46, 0.25); }
+  0%, 100% { box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+  50% { box-shadow: var(--shadow-gold-lg); }
 }
 
 @layer utilities {
   [data-scroll-progress] {
     transform-origin: left center;
+    background: var(--gradient-gold-metallic-h);
+    box-shadow: none;
   }
+
+  /* Override flat gold fills → metallic nhẹ */
+  .bg-gold {
+    background: var(--gradient-gold-metallic) !important;
+    box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: var(--color-navy);
+  }
+}
+
+/* ===== Song ngữ (i18n) ===== */
+/* Mặc định hiển thị tiếng Việt, ẩn tiếng Anh. Khi <html data-lang="en"> thì đảo lại. */
+.lang-en { display: none; }
+html[data-lang='en'] .lang-en { display: inline; }
+html[data-lang='en'] .lang-vi { display: none; }
+
+/* Nút chuyển ngôn ngữ VN / EN */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  border: 1px solid var(--color-mist);
+  border-radius: 999px;
+  padding: 2px;
+  background: #fff;
+}
+.lang-switch button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 0.22rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-slate);
+  background: transparent;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.lang-switch button:hover { color: var(--color-navy); }
+html[data-lang='vi'] .lang-switch [data-lang-btn='vi'],
+html[data-lang='en'] .lang-switch [data-lang-btn='en'] {
+  color: var(--color-navy);
+  background: var(--gradient-gold-metallic);
+  box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }

@@ -1,21 +1,22 @@
 ---
 import { stats } from '../data/site';
+import T from './T.astro';
 ---
-<section data-stats-bar class="bg-navy py-14 md:py-16">
+<section data-stats-bar class="bg-gradient-navy gradient-accent-top py-14 md:py-16">
   <div class="container-ibs grid grid-cols-2 gap-8 lg:grid-cols-4">
     {
       stats.map((s) => (
         <div data-stat-item class="text-center">
           <div
-            class="font-display text-4xl font-extrabold text-gold md:text-5xl"
+            class="font-display text-4xl font-extrabold text-gold-metallic md:text-5xl"
             data-counter
             data-target={s.value}
             data-suffix={s.suffix}
           >
             0{s.suffix}
           </div>
-          <span class="stat-underline mx-auto mt-2 block h-0.5 w-10 origin-center bg-gold"></span>
-          <p class="mt-2.5 text-sm font-light tracking-wide text-white/65">{s.label}</p>
+          <span class="stat-underline gold-line-metallic mx-auto mt-2 block h-0.5 w-10 origin-center"></span>
+          <p class="mt-2.5 text-sm font-light tracking-wide text-white/65"><T t={s.label} /></p>
         </div>
       ))
     }

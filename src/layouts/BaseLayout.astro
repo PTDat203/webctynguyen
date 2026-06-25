@@ -3,6 +3,8 @@ import '../styles/global.css';
 import Seo from '../components/Seo.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import T from '../components/T.astro';
+import { ui } from '../data/site';
 
 interface Props {
   title?: string;
@@ -11,24 +13,40 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 <!doctype html>
-<html lang="vi">
+<html
+  lang="vi"
+  data-lang="vi"
+  data-title-vi={ui.seo.title.vi}
+  data-title-en={ui.seo.title.en}
+  data-desc-vi={ui.seo.description.vi}
+  data-desc-en={ui.seo.description.en}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="theme-color" content="#0c3a75" />
+    <script is:inline>
+      (function () {
+        try {
+          var l = localStorage.getItem('ibs-lang') === 'en' ? 'en' : 'vi';
+          document.documentElement.setAttribute('data-lang', l);
+          document.documentElement.lang = l;
+        } catch (e) {}
+      })();
+    </script>
     <Seo title={title} description={description} />
   </head>
   <body>
     <div
       data-scroll-progress
-      class="pointer-events-none fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-gold"
+      class="pointer-events-none fixed left-0 top-0 z-[60] h-1 w-full origin-left"
       aria-hidden="true"
     ></div>
 
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-navy focus:px-4 focus:py-2 focus:text-white">
-      Bỏ qua tới nội dung
+      <T t={ui.cta.skipToContent} />
     </a>
     <Header />
     <main id="main">
@@ -39,7 +57,9 @@ const { title, description } = Astro.props;
     <button
       id="back-to-top"
       type="button"
-      aria-label="Lên đầu trang"
+      data-aria-label-vi={ui.cta.backToTop.vi}
+      data-aria-label-en={ui.cta.backToTop.en}
+      aria-label={ui.cta.backToTop.vi}
       class="fixed bottom-6 right-6 z-40 grid h-12 w-12 place-items-center rounded-full bg-navy text-gold shadow-lg ring-1 ring-white/15 hover:bg-gold hover:text-navy"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -49,6 +69,7 @@ const { title, description } = Astro.props;
 
     <script>
       import '../scripts/motion.ts';
+      import '../scripts/i18n.ts';
     </script>
   </body>
 </html>
