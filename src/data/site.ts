@@ -104,6 +104,15 @@ export const ui = {
     empty: { vi: 'Chưa có dự án trong nhóm này.', en: 'No projects in this category yet.' } as Bi,
     detail: { vi: 'Chi tiết dự án', en: 'Project detail' } as Bi,
     close: { vi: 'Đóng', en: 'Close' } as Bi,
+    scrollHint: { vi: 'Cuộn để khám phá', en: 'Scroll to explore' } as Bi,
+    moreOverline: { vi: 'Còn nhiều hơn thế', en: 'And much more' } as Bi,
+    moreTitle: { vi: 'Bạn quan tâm đến các dự án khác?', en: 'Interested in our other projects?' } as Bi,
+    moreDesc: {
+      vi: 'IBS còn hàng trăm dự án triển lãm, sự kiện và hội nghị khác. Liên hệ để nhận hồ sơ năng lực phù hợp với bạn.',
+      en: 'IBS has hundreds more exhibition, event and conference projects. Contact us for a capability profile tailored to you.',
+    } as Bi,
+    moreCard: { vi: 'Xem thêm dự án', en: 'See more projects' } as Bi,
+    viewAll: { vi: 'Xem tất cả dự án', en: 'View all projects' } as Bi,
   },
 
   contact: {

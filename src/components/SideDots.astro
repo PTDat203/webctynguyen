@@ -1,0 +1,167 @@
+---
+// Điều hướng phân trang dạng chấm tròn — cố định giữa mép phải màn hình.
+// Mỗi chấm tương ứng một section chính; chấm sáng lên theo section đang xem.
+import { ui } from '../data/site';
+---
+<nav
+  data-scroll-dots
+  class="scroll-dots"
+  aria-label="Điều hướng nhanh theo mục"
+  data-aria-label-vi="Điều hướng nhanh theo mục"
+  data-aria-label-en="Quick section navigation"
+>
+  <ul class="scroll-dots-list">
+    {
+      ui.nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            data-scroll-dot
+            class="scroll-dot-link"
+            data-aria-label-vi={item.label.vi}
+            data-aria-label-en={item.label.en}
+            aria-label={item.label.vi}
+          >
+            <span class="scroll-dot" aria-hidden="true" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .scroll-dots {
+    position: fixed;
+    top: 50%;
+    right: clamp(0.85rem, 1.6vw, 1.75rem);
+    transform: translateY(-50%);
+    z-index: 40;
+    display: none;
+    pointer-events: none;
+  }
+
+  @media (min-width: 1024px) {
+    .scroll-dots {
+      display: block;
+    }
+  }
+
+  .scroll-dots-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1.05rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scroll-dot-link {
+    pointer-events: auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.28rem 0.32rem;
+  }
+
+  .scroll-dot {
+    position: relative;
+    flex: none;
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: rgba(12, 58, 117, 0.28);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .scroll-dot-link:hover .scroll-dot,
+  .scroll-dot-link:focus-visible .scroll-dot {
+    transform: scale(1.25);
+    background: var(--color-navy);
+  }
+
+  /* Mục đang xem: chấm vàng kim, có quầng sáng nhẹ. */
+  .scroll-dot-link.is-active .scroll-dot {
+    background: var(--gradient-gold-metallic);
+    transform: scale(1.4);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.7),
+      0 0 12px rgba(255, 196, 48, 0.6);
+  }
+
+  .scroll-dots :focus-visible {
+    outline: none;
+  }
+
+  .scroll-dot-link:focus-visible .scroll-dot {
+    outline: 2px solid var(--color-sky);
+    outline-offset: 3px;
+  }
+
+  /* Trên nền section tối, đổi màu chấm để vẫn rõ. */
+  :global(body.dots-on-dark) .scroll-dot {
+    background: rgba(255, 255, 255, 0.42);
+    box-shadow: 0 0 0 1px rgba(12, 58, 117, 0.35);
+  }
+
+  :global(body.dots-on-dark) .scroll-dot-link:hover .scroll-dot,
+  :global(body.dots-on-dark) .scroll-dot-link:focus-visible .scroll-dot {
+    background: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-dot {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const dots = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('[data-scroll-dot]')
+  );
+  if (dots.length) {
+    const sections = dots
+      .map((d) => document.querySelector<HTMLElement>(d.getAttribute('href') || ''))
+      .filter((s): s is HTMLElement => Boolean(s));
+
+    const setActive = (id: string) => {
+      dots.forEach((d) => {
+        const on = d.getAttribute('href') === id;
+        d.classList.toggle('is-active', on);
+        if (on) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+    };
+
+    // Đổi tông chấm khi section đang xem có nền tối (navy).
+    const darkIds = new Set(['#du-an', '#lien-he']);
+    const setTone = (id: string) => {
+      document.body.classList.toggle('dots-on-dark', darkIds.has(id));
+    };
+
+    if ('IntersectionObserver' in window && sections.length) {
+      let current = '';
+      const spy = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = '#' + (entry.target as HTMLElement).id;
+              if (id !== current) {
+                current = id;
+                setActive(id);
+                setTone(id);
+              }
+            }
+          });
+        },
+        { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+      );
+      sections.forEach((s) => spy.observe(s));
+    }
+  }
+</script>

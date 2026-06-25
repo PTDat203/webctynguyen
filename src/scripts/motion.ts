@@ -164,7 +164,9 @@ function initBackToTop(reduced: boolean) {
   window.addEventListener('scroll', toggle, { passive: true });
 
   btt.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    const toTop = (window as typeof window & { __ibsScrollToTop?: () => void }).__ibsScrollToTop;
+    if (toTop) toTop();
+    else window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   });
 }
 

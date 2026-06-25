@@ -1,107 +1,108 @@
 ---
 import { Image } from 'astro:assets';
-import { projects, projectFilters, ui } from '../data/site';
+import { projects, ui } from '../data/site';
 import { projectImages } from '../data/images';
 import SectionHeader from './SectionHeader.astro';
 import Icon from './Icon.astro';
 import T from './T.astro';
+
+// 4 dự án đại diện (mỗi nhóm một) + 1 thẻ CTA cuối.
+const featured = [projects[0], projects[3], projects[5], projects[7]];
+const slideTotal = featured.length + 1;
 ---
-<section id="du-an" data-spotlight class="bg-gradient-paper-soft py-24 md:py-32">
-  <div class="container-ibs">
-    <SectionHeader
-      overline={ui.projects.overline}
-      title={ui.projects.title}
-    />
+<section id="du-an" data-project-slider class="project-slider">
+  <div class="ps-bg-layer" aria-hidden="true">
+    {
+      featured.map((p, i) => (
+        <Image
+          src={projectImages[p.title.vi]}
+          alt=""
+          widths={[768, 1280, 1920]}
+          sizes="100vw"
+          class:list={['ps-bg', i === 0 && 'is-active']}
+          data-bg={i}
+        />
+      ))
+    }
+    <div class="ps-bg ps-bg-cta" data-bg={featured.length}></div>
+    <div class="ps-bg-scrim"></div>
+  </div>
 
-    <div
-      data-project-filters
-      class="relative mt-10 flex flex-wrap justify-center gap-2.5"
-      role="tablist"
-      aria-label="Lọc dự án"
-    >
-      <span
-        data-filter-pill
-        class="pointer-events-none absolute top-0 left-0 hidden rounded-full border border-gold bg-gold sm:block"
-        aria-hidden="true"
-      ></span>
-      {
-        projectFilters.map((f, i) => (
-          <button
-            type="button"
-            data-filter={f.key}
-            class:list={[
-              'relative z-[1] rounded-full border px-5 py-2 text-sm font-medium transition-colors',
-              i === 0
-                ? 'border-gold bg-gold text-navy'
-                : 'border-mist text-slate hover:border-navy hover:text-navy',
-            ]}
-          >
-            <T t={f.label} />
-          </button>
-        ))
-      }
+  <div class="ps-inner container-ibs">
+    <div class="ps-head">
+      <SectionHeader overline={ui.projects.overline} title={ui.projects.title} align="left" light />
     </div>
 
-    <div id="project-grid" class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        projects.map((p) => (
-          <button
-            type="button"
-            data-tilt
-            data-ripple
-            class="project-card group relative block aspect-[4/3] overflow-hidden rounded-sm bg-navy text-left"
-            data-category={p.categoryKey}
-            data-title-vi={p.title.vi}
-            data-title-en={p.title.en}
-            data-desc-vi={p.desc.vi}
-            data-desc-en={p.desc.en}
-            data-cat-vi={p.category.vi}
-            data-cat-en={p.category.en}
-          >
-            <Image
-              src={projectImages[p.title.vi]}
-              alt={p.title.vi}
-              widths={[400, 800]}
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-              class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/10 to-transparent"></div>
-            <span class="absolute left-4 top-4 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-gold-metallic">
-              <T t={p.category} />
+    <div class="ps-stage">
+      <div class="ps-text" data-ps-text>
+        {
+          featured.map((p, i) => (
+            <article class:list={['ps-text-item', i === 0 && 'is-active']} data-text={i}>
+              <span class="ps-cat"><T t={p.category} /></span>
+              <h3 class="ps-title"><T t={p.title} /></h3>
+              <p class="ps-desc"><T t={p.desc} /></p>
+              <span class="ps-count">{String(i + 1).padStart(2, '0')}<i>/</i>{String(slideTotal).padStart(2, '0')}</span>
+            </article>
+          ))
+        }
+        <article class="ps-text-item ps-text-cta" data-text={featured.length}>
+          <span class="ps-cat"><T t={ui.projects.moreOverline} /></span>
+          <h3 class="ps-title"><T t={ui.projects.moreTitle} /></h3>
+          <p class="ps-desc"><T t={ui.projects.moreDesc} /></p>
+        </article>
+      </div>
+
+      <div class="ps-cards" data-ps-cards>
+        <div class="ps-track" data-ps-track>
+          {
+            featured.map((p, i) => (
+              <div class:list={['ps-card', i === 0 && 'is-active']} data-card={i}>
+                <Image
+                  src={projectImages[p.title.vi]}
+                  alt={p.title.vi}
+                  widths={[400, 800]}
+                  sizes="(min-width:1024px) 36vw, 80vw"
+                  class="ps-card-img"
+                />
+                <span class="ps-card-cat"><T t={p.category} /></span>
+                <h4 class="ps-card-title"><T t={p.title} /></h4>
+              </div>
+            ))
+          }
+          <a href="#lien-he" class="ps-card ps-card-more" data-card={featured.length}>
+            <span class="ps-more-plus" aria-hidden="true">+</span>
+            <h4 class="ps-card-title"><T t={ui.projects.moreCard} /></h4>
+            <span class="ps-more-cta">
+              <T t={ui.projects.viewAll} /> <Icon name="arrow-right" class="h-4 w-4" />
             </span>
-            <div class="absolute inset-x-0 bottom-0 p-5">
-              <h3 class="font-display text-lg font-semibold text-white"><T t={p.title} /></h3>
-            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ps-bar" data-ps-bar role="tablist" aria-label="Dự án">
+      {
+        Array.from({ length: slideTotal }).map((_, i) => (
+          <button
+            type="button"
+            class:list={['ps-dot', i === 0 && 'is-active']}
+            data-dot={i}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+            aria-label={`Mục ${i + 1}`}
+          >
+            <span class="ps-dot-num">{i + 1}</span>
           </button>
         ))
       }
     </div>
 
-    <p id="project-empty" class="mt-10 hidden text-center text-slate"><T t={ui.projects.empty} /></p>
+    <div class="ps-hint" data-ps-hint aria-hidden="true">
+      <Icon name="chevron-down" class="ps-hint-icon h-5 w-5" />
+      <span><T t={ui.projects.scrollHint} /></span>
+    </div>
   </div>
 </section>
-
-<div
-  id="lightbox"
-  class="fixed inset-0 z-[90] hidden items-center justify-center bg-navy/85 p-4 backdrop-blur"
-  role="dialog"
-  aria-modal="true"
-  data-aria-label-vi={ui.projects.detail.vi}
-  data-aria-label-en={ui.projects.detail.en}
-  aria-label={ui.projects.detail.vi}
->
-  <div data-lb-panel class="relative w-full max-w-2xl overflow-hidden rounded-sm bg-white">
-    <div id="lb-media" class="aspect-video w-full bg-navy"></div>
-    <button id="lb-close" type="button" class="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-navy shadow" data-aria-label-vi={ui.projects.close.vi} data-aria-label-en={ui.projects.close.en} aria-label={ui.projects.close.vi}>
-      <Icon name="close" class="h-5 w-5" />
-    </button>
-    <div class="p-6">
-      <span id="lb-cat" class="eyebrow"></span>
-      <h3 id="lb-title" class="mt-1.5 font-display text-2xl font-bold"></h3>
-      <p id="lb-desc" class="mt-2 font-light text-slate"></p>
-    </div>
-  </div>
-</div>
 
 <script>
   import '../scripts/projects.ts';

@@ -299,12 +299,34 @@ function initLoader() {
   window.setTimeout(finish, 4500); // an toàn: không bao giờ kẹt loader
 }
 
+// ---- Vùng sáng vàng bám theo con trỏ (thay cho hiệu ứng trượt trái→phải) ----
+function initGoldGlow() {
+  if (reduced || !finePointer) return;
+  const sel =
+    '.text-gold-metallic, .hero-highlight, .bg-gold-metallic, .bg-gold-metallic-h, .bg-gold, .eyebrow, .btn-primary, .gold-line-metallic';
+  document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
+    el.addEventListener(
+      'mousemove',
+      (e) => {
+        const r = el.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        el.style.setProperty('--gx', `${x.toFixed(1)}%`);
+        el.style.setProperty('--gy', `${y.toFixed(1)}%`);
+      },
+      { passive: true }
+    );
+  });
+}
+
 function boot() {
   initLoader();
   initCursor();
   initMagnetic();
   initRipple();
   initTilt();
+  initGoldGlow();
   initBlueprint();
 }
 

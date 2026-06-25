@@ -31,22 +31,24 @@
   --color-amber: #ffe28a;
 
   --gradient-gold-metallic: linear-gradient(135deg,
-      #fff8d6 0%,
-      #f4d77f 15%,
-      #fff2bd 30%,
-      #e6bf57 46%,
-      #f8df8c 63%,
-      #e2bb57 80%,
-      #f1cf6a 100%);
+      #fff6d8 0%,
+      #f4d278 14%,
+      #ecc561 28%,
+      #fff0bb 42%,
+      #edc964 58%,
+      #e2bb57 72%,
+      #f6d77f 86%,
+      #fbe7a4 100%);
 
   --gradient-gold-metallic-h: linear-gradient(90deg,
-      #fff8d6 0%,
-      #f4d77f 16%,
-      #fff2bd 32%,
-      #e6bf57 48%,
-      #f8df8c 66%,
-      #e2bb57 82%,
-      #f1cf6a 100%);
+      #fff6d8 0%,
+      #f4d278 14%,
+      #ecc561 28%,
+      #fff0bb 42%,
+      #edc964 58%,
+      #e2bb57 72%,
+      #f6d77f 86%,
+      #fbe7a4 100%);
   --gradient-gold-shine: linear-gradient(105deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0.18) 28%,
@@ -123,6 +125,14 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /* Chiều cao header cố định (khớp h-16 / md:h-20) để các section chừa chỗ. */
+    --header-h: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      --header-h: 5rem;
+    }
   }
 
   body {
@@ -145,7 +155,7 @@
 
   /* anchor offset dưới sticky header */
   section[id] {
-    scroll-margin-top: 84px;
+    scroll-margin-top: calc(var(--header-h) + 0.875rem);
   }
 
   ::selection {
@@ -180,6 +190,34 @@
   }
 }
 
+/* ===== Lenis (cuộn mượt) — CSS khuyến nghị ===== */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Khoá cuộn nền khi mở menu/modal trên mobile (best practice). */
+body.no-scroll {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
 /* ===== Component classes ===== */
 @layer components {
   .container-ibs {
@@ -203,10 +241,13 @@
     text-transform: uppercase;
     text-decoration: none;
     color: var(--color-navy);
-    background: var(--gradient-gold-metallic);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.6)),
+        transparent 42%),
+      var(--gradient-gold-metallic);
     box-shadow: 0 10px 24px rgba(255, 196, 48, 0.34), 0 3px 8px rgba(185, 131, 18, 0.24);
-    transition: background-position 0.55s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    transition: box-shadow 0.25s ease, transform 0.25s ease, filter 0.25s ease;
   }
 
   #dich-vu .section-overline.eyebrow {
@@ -245,32 +286,44 @@
 
   /* Vàng metallic — nhẹ, không chói */
   .bg-gold-metallic {
-    background: var(--gradient-gold-metallic);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.55)),
+        transparent 42%),
+      var(--gradient-gold-metallic);
     box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.32);
-    transition: background-position 0.55s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
   }
 
   .bg-gold-metallic-h {
-    background: var(--gradient-gold-metallic-h);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.55)),
+        transparent 42%),
+      var(--gradient-gold-metallic-h);
     box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    transition: background-position 0.55s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
   }
 
   .text-gold-metallic {
-    background: var(--gradient-gold-metallic-h);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.9)),
+        transparent 48%),
+      var(--gradient-gold-metallic-h);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     text-shadow: 0 2px 16px rgba(255, 196, 48, 0.24);
-    transition: background-position 0.55s ease, filter 0.25s ease;
+    transition: filter 0.25s ease;
   }
 
   .hero-highlight {
-    background: var(--gradient-gold-metallic-h);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.9)),
+        transparent 48%),
+      var(--gradient-gold-metallic-h);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -283,15 +336,17 @@
     background:
       linear-gradient(#fff, #fff) padding-box,
       var(--gradient-gold-metallic) border-box;
-    background-size: 100% 100%, 220% 100%;
-    transition: background-position 0.55s ease, box-shadow 0.25s ease;
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
   }
 
   .gold-line-metallic {
-    background: var(--gradient-gold-metallic-h);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.7)),
+        transparent 45%),
+      var(--gradient-gold-metallic-h);
     box-shadow: 0 0 12px rgba(255, 212, 90, 0.42);
-    transition: background-position 0.55s ease, box-shadow 0.25s ease;
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
   }
 
   .eyebrow:hover,
@@ -301,7 +356,7 @@
   .text-gold-metallic:hover,
   .gold-line-metallic:hover,
   .group:hover .text-gold-metallic {
-    background-position: 100% 50%;
+    --glow: 1;
     filter: saturate(1.12) brightness(1.06);
   }
 
@@ -403,34 +458,24 @@
   .btn-primary {
     position: relative;
     overflow: hidden;
-    background: var(--gradient-gold-metallic);
-    background-size: 220% 100%;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.6)),
+        transparent 42%),
+      var(--gradient-gold-metallic);
     color: var(--color-navy);
     font-weight: 700;
     box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.34);
     border: 1px solid rgba(185, 131, 18, 0.38);
-    transition: transform 0.2s ease, background-position 0.55s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  }
-
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--gradient-gold-shine);
-    pointer-events: none;
-    transform: translateX(-115%) skewX(-18deg);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   }
 
   .btn-primary:hover {
-    background-position: 100% 50%;
+    --glow: 1;
     color: var(--color-navy);
     transform: translateY(-2px);
+    filter: saturate(1.1) brightness(1.05);
     box-shadow: var(--shadow-gold-lg), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-  }
-
-  .btn-primary:hover::after {
-    transform: translateX(115%) skewX(-18deg);
   }
 
   .btn-outline {
@@ -628,16 +673,19 @@
 
   /* Override flat gold fills → metallic nhẹ */
   .bg-gold {
-    background: var(--gradient-gold-metallic) !important;
-    background-size: 220% 100% !important;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.55)),
+        transparent 42%),
+      var(--gradient-gold-metallic) !important;
     box-shadow: var(--shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.34);
     color: var(--color-navy);
-    transition: background-position 0.55s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
   }
 
   .bg-gold:hover,
   .group:hover .bg-gold {
-    background-position: 100% 50% !important;
+    --glow: 1;
     box-shadow: var(--shadow-gold-lg), inset 0 1px 0 rgba(255, 255, 255, 0.45);
     filter: saturate(1.12) brightness(1.06);
   }
@@ -827,6 +875,26 @@ body.has-custom-cursor label {
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
   transform-style: preserve-3d;
   will-change: transform;
+}
+
+/* ---- Thẻ dự án: vùng sáng vàng bám theo con trỏ ---- */
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--tilt-x, 50%) var(--tilt-y, 50%),
+      rgba(255, 222, 130, 0.32),
+      rgba(255, 212, 90, 0.08) 32%,
+      transparent 58%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  mix-blend-mode: screen;
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 /* ---- Spotlight theo con trỏ ---- */
@@ -1019,5 +1087,435 @@ body.is-loaded .fx-loader {
   [data-tilt],
   [data-magnetic] {
     transition: none !important;
+  }
+}
+
+/* ===== Projects slider (scroll-driven, lấy ý tưởng as-slider) ===== */
+.project-slider {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-navy);
+  color: #fff;
+  overflow: hidden;
+}
+
+.project-slider:not(.is-enhanced) {
+  padding-block: 6rem;
+}
+
+.project-slider.is-enhanced {
+  min-height: 100svh;
+  display: flex;
+}
+
+/* Lớp ảnh nền */
+.ps-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.project-slider:not(.is-enhanced) .ps-bg-layer {
+  display: none;
+}
+
+.ps-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.14);
+  transition: opacity 1s ease, transform 7s ease;
+  will-change: opacity, transform;
+}
+
+.ps-bg.is-active {
+  opacity: 0.5;
+  transform: scale(1);
+}
+
+.ps-bg-cta {
+  background:
+    radial-gradient(120% 120% at 80% 18%, rgba(226, 187, 87, 0.3), transparent 60%),
+    linear-gradient(135deg, #0c3a75 0%, #08294f 60%, #061d3a 100%);
+}
+
+.ps-bg-cta.is-active {
+  opacity: 1;
+}
+
+.ps-bg-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 21, 44, 0.92) 0%,
+    rgba(6, 21, 44, 0.64) 40%,
+    rgba(6, 21, 44, 0.28) 100%
+  );
+}
+
+/* Khối nội dung */
+.ps-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.project-slider.is-enhanced .ps-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: calc(var(--header-h) + clamp(1rem, 3vh, 2.5rem)) clamp(3rem, 7vh, 5rem);
+}
+
+.ps-head {
+  margin-bottom: clamp(1.5rem, 4vh, 2.75rem);
+}
+
+/* Sân khấu: cột chữ | cột card */
+.project-slider.is-enhanced .ps-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  flex: 1;
+  min-height: 0;
+}
+
+/* Cột chữ đổi nội dung */
+.project-slider.is-enhanced .ps-text {
+  position: relative;
+  min-height: 17rem;
+}
+
+.ps-text-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.project-slider.is-enhanced .ps-text-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.project-slider.is-enhanced .ps-text-item.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.ps-cat {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: transparent;
+  background: var(--gradient-gold-metallic);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-bottom: 0.85rem;
+}
+
+.ps-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1.16;
+  color: #fff;
+}
+
+.ps-desc {
+  margin-top: 1rem;
+  max-width: 30rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ps-count {
+  margin-top: 1.6rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ps-count i {
+  margin: 0 0.4rem;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Cột card: focus to ở giữa, thẻ chưa tới lượt nhỏ & nằm dưới, đã qua lướt lên + mờ */
+.ps-cards {
+  position: relative;
+}
+
+.project-slider.is-enhanced .ps-cards {
+  overflow: hidden;
+  padding: 40px 0;
+  margin: -40px 0;
+}
+
+.ps-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 1.5vw, 1.4rem);
+}
+
+.project-slider.is-enhanced .ps-track {
+  height: clamp(320px, 54vh, 470px);
+  will-change: transform;
+}
+
+.ps-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(150px, 16vw, 215px);
+  height: clamp(135px, 22vh, 190px);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  opacity: 0.5;
+  transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease;
+}
+
+.project-slider.is-enhanced .ps-card {
+  cursor: pointer;
+}
+
+/* Thẻ focus: to hẳn (rộng + cao hơn) để nổi bật, queue vẫn nhỏ.
+   Không transition width nên centerCard đọc đúng vị trí ngay. */
+.project-slider.is-enhanced .ps-card.is-active {
+  width: clamp(250px, 30vw, 400px);
+  height: clamp(320px, 54vh, 470px);
+  opacity: 1;
+  cursor: default;
+}
+
+.project-slider.is-enhanced .ps-card:not(.is-active):hover {
+  opacity: 0.85;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.5);
+}
+
+.ps-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.ps-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(18deg, rgba(6, 21, 44, 0.88) 0%, rgba(6, 21, 44, 0) 72%);
+  z-index: 1;
+}
+
+.ps-card-cat,
+.ps-card-title {
+  position: relative;
+  z-index: 2;
+}
+
+.ps-card-cat {
+  margin: 0 1.1rem 0.25rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.ps-card-title {
+  margin: 0 1.1rem 1.1rem;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Thẻ CTA cuối (bấm được) */
+.ps-card-more {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.55rem;
+  padding: 1.5rem;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+.project-slider.is-enhanced .ps-card-more.is-active {
+  opacity: 1;
+}
+
+.ps-card-more::before {
+  display: none;
+}
+
+.ps-more-plus {
+  font-size: 2.4rem;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--color-gold);
+}
+
+.ps-card-more .ps-card-title {
+  margin: 0;
+}
+
+.ps-more-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.ps-card-more:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* Thanh chấm điều hướng (hàng ngang, đáy cột chữ) */
+.ps-bar {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.project-slider.is-enhanced .ps-bar {
+  flex-direction: row;
+  align-items: center;
+  margin-top: clamp(1.25rem, 3.5vh, 2.25rem);
+}
+
+.project-slider:not(.is-enhanced) .ps-bar {
+  display: none;
+}
+
+.ps-dot {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  display: grid;
+  place-items: center;
+  transform: scale(0.42);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  color: var(--color-navy);
+}
+
+.ps-dot.is-active {
+  transform: scale(1);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.ps-dot-num {
+  font-size: 0.62rem;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ps-dot.is-active .ps-dot-num {
+  opacity: 1;
+}
+
+.ps-dot:focus-visible {
+  outline: 2px solid var(--color-sky);
+  outline-offset: 3px;
+}
+
+/* Gợi ý cuộn */
+.ps-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: clamp(1rem, 3vh, 1.8rem);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.project-slider:not(.is-enhanced) .ps-hint {
+  display: none;
+}
+
+.ps-hint-icon {
+  animation: psHintBounce 1.6s ease-in-out infinite;
+}
+
+@keyframes psHintBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+/* Bố cục dự phòng (mobile / reduced-motion / không JS): lưới card đơn giản */
+.project-slider:not(.is-enhanced) .ps-stage {
+  display: block;
+}
+
+.project-slider:not(.is-enhanced) .ps-text {
+  display: none;
+}
+
+.project-slider:not(.is-enhanced) .ps-track {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  height: auto;
+}
+
+@media (min-width: 640px) {
+  .project-slider:not(.is-enhanced) .ps-track {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-slider:not(.is-enhanced) .ps-card {
+  width: auto;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ps-bg,
+  .ps-card,
+  .ps-text-item {
+    transition: none;
+  }
+
+  .ps-hint-icon {
+    animation: none;
   }
 }

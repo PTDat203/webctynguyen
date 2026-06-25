@@ -4,220 +4,128 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const desktop = () => window.matchMedia('(min-width: 1024px)').matches;
+
+type WindowWithScroll = typeof window & { __ibsScrollToY?: (y: number) => void };
 
 export function initProjects() {
-  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
-  const cards = Array.from(document.querySelectorAll<HTMLElement>('.project-card'));
-  const empty = document.getElementById('project-empty');
-  const filterBar = document.querySelector('[data-project-filters]');
-  if (!buttons.length || !cards.length) return;
+  const section = document.querySelector<HTMLElement>('[data-project-slider]');
+  if (!section) return;
 
-  let activeBtn = buttons[0];
+  const track = section.querySelector<HTMLElement>('[data-ps-track]');
+  const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-card]'));
+  const bgs = Array.from(section.querySelectorAll<HTMLElement>('[data-bg]'));
+  const texts = Array.from(section.querySelectorAll<HTMLElement>('[data-text]'));
+  const dots = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+  const total = cards.length;
+  if (!track || total < 2) return;
 
-  const setActiveStyles = (btn: HTMLButtonElement) => {
-    buttons.forEach((b) => {
-      const active = b === btn;
-      b.classList.toggle('bg-gold', active);
-      b.classList.toggle('text-navy', active);
-      b.classList.toggle('border-gold', active);
-      b.classList.toggle('text-slate', !active);
-      b.classList.toggle('border-mist', !active);
-      b.classList.toggle('is-filter-active', active);
-    });
+  let index = 0;
+
+  // Canh thẻ thứ i vào giữa vùng nhìn (các thẻ rộng bằng nhau nên phép tính ổn định).
+  const centerCard = (i: number, animate: boolean) => {
+    const card = cards[i];
+    const viewport = track.parentElement;
+    if (!card || !viewport) return;
+    const x = viewport.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
+    gsap.to(track, { x, duration: animate ? 0.7 : 0, ease: 'power3.out', overwrite: 'auto' });
   };
 
-  const matches = (c: HTMLElement, filter: string) =>
-    filter === 'all' || c.dataset.category === filter;
-
-  const animateFilter = (filter: string) => {
-    const toHide = cards.filter((c) => {
-      const show = matches(c, filter);
-      return !show && !c.classList.contains('hidden');
+  const apply = (i: number, animate = true) => {
+    index = Math.max(0, Math.min(total - 1, i));
+    bgs.forEach((b, n) => b.classList.toggle('is-active', n === index));
+    texts.forEach((t, n) => t.classList.toggle('is-active', n === index));
+    cards.forEach((c, n) => {
+      c.classList.toggle('is-active', n === index);
+      c.classList.toggle('is-past', n < index);
     });
-    const toShow = cards.filter((c) => {
-      const show = matches(c, filter);
-      return show && c.classList.contains('hidden');
+    dots.forEach((d, n) => {
+      const on = n === index;
+      d.classList.toggle('is-active', on);
+      d.setAttribute('aria-selected', String(on));
     });
-
-    if (reduced()) {
-      cards.forEach((c) => {
-        const show = matches(c, filter);
-        c.classList.toggle('hidden', !show);
-        gsap.set(c, { autoAlpha: 1, scale: 1 });
-      });
-      const visible = cards.filter((c) => !c.classList.contains('hidden')).length;
-      empty?.classList.toggle('hidden', visible !== 0);
-      return;
-    }
-
-    const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
-
-    if (toHide.length) {
-      tl.to(toHide, {
-        autoAlpha: 0,
-        scale: 0.92,
-        duration: 0.25,
-        stagger: 0.04,
-        onComplete: () => {
-          toHide.forEach((c) => c.classList.add('hidden'));
-          gsap.set(toHide, { clearProps: 'all' });
-        },
-      });
-    }
-
-    toShow.forEach((c) => c.classList.remove('hidden'));
-    if (toShow.length) {
-      gsap.set(toShow, { autoAlpha: 0, scale: 0.92 });
-      tl.to(
-        toShow,
-        {
-          autoAlpha: 1,
-          scale: 1,
-          duration: 0.35,
-          stagger: 0.06,
-          ease: 'power3.out',
-        },
-        toHide.length ? '>-0.05' : 0
-      );
-    }
-
-    const visible = cards.filter((c) => matches(c, filter)).length;
-    empty?.classList.toggle('hidden', visible !== 0);
+    if (section.classList.contains('is-enhanced')) centerCard(index, animate);
   };
 
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      if (btn === activeBtn) return;
-      activeBtn = btn;
-      setActiveStyles(btn);
+  // ===== Bản nâng cao (desktop + cho phép animation): slider ghim theo scroll =====
+  let st: ScrollTrigger | null = null;
 
-      if (filterBar && !reduced()) {
-        const pill = filterBar.querySelector<HTMLElement>('[data-filter-pill]');
-        if (pill) {
-          const rect = btn.getBoundingClientRect();
-          const barRect = filterBar.getBoundingClientRect();
-          gsap.to(pill, {
-            x: rect.left - barRect.left,
-            width: rect.width,
-            height: rect.height,
-            duration: 0.35,
-            ease: 'power3.out',
-          });
-        }
-      }
+  const enhance = () => {
+    section.classList.add('is-enhanced');
+    apply(0, false);
+    requestAnimationFrame(() => centerCard(0, false));
 
-      animateFilter(btn.dataset.filter || 'all');
-    });
-  });
-
-  const lb = document.getElementById('lightbox');
-  const lbPanel = lb?.querySelector<HTMLElement>('[data-lb-panel]');
-  const lbMedia = document.getElementById('lb-media');
-  const lbCat = document.getElementById('lb-cat');
-  const lbTitle = document.getElementById('lb-title');
-  const lbDesc = document.getElementById('lb-desc');
-  const lbClose = document.getElementById('lb-close');
-  let lbOpen = false;
-
-  const openLb = (c: HTMLElement) => {
-    if (!lb || !lbPanel) return;
-
-    const lang = document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'vi';
-    const pick = (name: string) =>
-      c.getAttribute(`data-${name}-${lang}`) || c.getAttribute(`data-${name}-vi`) || '';
-    if (lbCat) lbCat.textContent = pick('cat');
-    if (lbTitle) lbTitle.textContent = pick('title');
-    if (lbDesc) lbDesc.textContent = pick('desc');
-    const cardImg = c.querySelector('img');
-    const src = cardImg ? cardImg.currentSrc || cardImg.src : '';
-    if (lbMedia) {
-      lbMedia.innerHTML = src ? `<img src="${src}" alt="" class="h-full w-full object-cover" />` : '';
-    }
-
-    lb.classList.remove('hidden');
-    lb.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-    lbOpen = true;
-
-    if (reduced()) return;
-
-    gsap.set(lb, { autoAlpha: 0 });
-    gsap.set(lbPanel, { scale: 0.85, autoAlpha: 0 });
-    gsap.to(lb, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' });
-    gsap.to(lbPanel, { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'power2.out', delay: 0.05 });
-  };
-
-  const closeLb = () => {
-    if (!lb || !lbPanel || !lbOpen) return;
-
-    if (reduced()) {
-      lb.classList.add('hidden');
-      lb.classList.remove('flex');
-      document.body.style.overflow = '';
-      lbOpen = false;
-      return;
-    }
-
-    gsap.to(lbPanel, { scale: 0.9, autoAlpha: 0, duration: 0.2, ease: 'power2.in' });
-    gsap.to(lb, {
-      autoAlpha: 0,
-      duration: 0.25,
-      ease: 'power2.in',
-      delay: 0.05,
-      onComplete: () => {
-        lb.classList.add('hidden');
-        lb.classList.remove('flex');
-        document.body.style.overflow = '';
-        lbOpen = false;
+    st = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: () => '+=' + (total - 1) * Math.round(window.innerHeight * 0.2),
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const i = Math.round(self.progress * (total - 1));
+        if (i !== index) apply(i, true);
       },
+      onRefresh: () => centerCard(index, false),
     });
   };
 
-  cards.forEach((c) => c.addEventListener('click', () => openLb(c)));
-  lbClose?.addEventListener('click', closeLb);
-  lb?.addEventListener('click', (e) => {
-    if (e.target === lb) closeLb();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLb();
-  });
+  const unenhance = () => {
+    section.classList.remove('is-enhanced');
+    st?.kill();
+    st = null;
+    gsap.set(track, { clearProps: 'transform' });
+    apply(0, false);
+  };
 
-  if (filterBar && !reduced()) {
-    const pill = filterBar.querySelector<HTMLElement>('[data-filter-pill]');
-    const first = buttons[0];
-    if (pill && first) {
-      const syncPill = () => {
-        const rect = first.getBoundingClientRect();
-        const barRect = filterBar.getBoundingClientRect();
-        gsap.set(pill, {
-          x: rect.left - barRect.left,
-          width: rect.width,
-          height: rect.height,
-          opacity: 1,
-        });
-        pill.classList.add('is-ready');
-      };
-      syncPill();
-      filterBar.classList.add('pill-ready');
-      window.addEventListener('resize', syncPill, { passive: true });
-    }
+  const shouldEnhance = () => desktop() && !reduced();
+  let enhanced = false;
+
+  if (shouldEnhance()) {
+    enhanced = true;
+    enhance();
   }
 
-  if (!reduced()) {
-    gsap.from(cards, {
-      autoAlpha: 0,
-      y: 40,
-      scale: 0.96,
-      duration: 0.6,
-      stagger: 0.08,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: document.getElementById('project-grid'),
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
+  // Bật/tắt chế độ slider khi đổi breakpoint hoặc prefers-reduced-motion.
+  const onResize = () => {
+    const want = shouldEnhance();
+    if (want && !enhanced) {
+      enhanced = true;
+      enhance();
+    } else if (!want && enhanced) {
+      enhanced = false;
+      unenhance();
+    } else if (want) {
+      centerCard(index, false);
+    }
+  };
+  window.addEventListener('resize', onResize, { passive: true });
+
+  // Nhảy tới slide i (dùng cho bấm chấm điều hướng & bấm thẻ trong queue).
+  const scrollToY = (window as WindowWithScroll).__ibsScrollToY;
+  const jumpTo = (i: number) => {
+    if (i === index) return;
+    if (st && enhanced) {
+      const target = st.start + (i / (total - 1)) * (st.end - st.start);
+      if (scrollToY) scrollToY(target);
+      else window.scrollTo({ top: target, behavior: reduced() ? 'auto' : 'smooth' });
+    } else {
+      apply(i, true);
+      cards[i]?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+    }
+  };
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => jumpTo(i));
+  });
+
+  // Bấm vào một dự án trong queue → hiển thị ngay (thẻ CTA cuối giữ vai trò link).
+  cards.forEach((c, i) => {
+    if (c.classList.contains('ps-card-more')) return;
+    c.addEventListener('click', () => {
+      if (section.classList.contains('is-enhanced')) jumpTo(i);
     });
-  }
+  });
 }
 
 if (typeof document !== 'undefined') {

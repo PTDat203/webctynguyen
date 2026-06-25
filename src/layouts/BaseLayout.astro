@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Seo from '../components/Seo.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SideDots from '../components/SideDots.astro';
 import T from '../components/T.astro';
 import { ui } from '../data/site';
 
@@ -90,6 +91,7 @@ const { title, description } = Astro.props;
       <T t={ui.cta.skipToContent} />
     </a>
     <Header />
+    <SideDots />
     <main id="main">
       <slot />
     </main>
@@ -109,6 +111,7 @@ const { title, description } = Astro.props;
     </button>
 
     <script>
+      import '../scripts/smooth-scroll.ts';
       import '../scripts/motion.ts';
       import '../scripts/i18n.ts';
       import '../scripts/fx.ts';

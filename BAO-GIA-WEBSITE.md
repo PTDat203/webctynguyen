@@ -18,9 +18,11 @@
 | 1.5 | Tối ưu SEO & hiệu năng | Thẻ meta, Open Graph, sitemap, dữ liệu có cấu trúc (Schema.org), tối ưu ảnh định dạng WebP, tốc độ tải nhanh | 1.000.000 |
 | 1.6 | Form liên hệ | Biểu mẫu gửi yêu cầu tư vấn, tích hợp nhận thông tin qua email | 500.000 |
 | 1.7 | Triển khai & bàn giao | Cấu hình, đưa website lên hosting (Firebase Hosting), kết nối tên miền, hướng dẫn sử dụng | 300.000 |
-| | **TỔNG CỘNG** | | **10.000.000** |
+| 1.8 | Tên miền (1 năm) | Đăng ký & cấu hình tên miền, gia hạn năm đầu tiên | 350.000 |
+| 1.9 | Hosting (1 năm) | Chi phí lưu trữ website năm đầu tiên | 500.000 |
+| | **TỔNG CỘNG** | | **10.850.000** |
 
-> Giá trọn gói: **10.000.000 VNĐ** (Mười triệu đồng chẵn) — chưa bao gồm thuế GTGT (VAT).
+> Giá trọn gói: **10.850.000 VNĐ** (Mười triệu tám trăm năm mươi nghìn đồng) — chưa bao gồm thuế GTGT (VAT). Đã bao gồm tên miền & hosting năm đầu tiên.
 
 ---
 
@@ -56,8 +58,7 @@
 
 ## 5. CHI PHÍ KHÔNG BAO GỒM
 
-- Tên miền (domain).
-- Hosting/VPS trả phí (dự án mặc định dùng gói Firebase Hosting miễn phí; nếu cần hạ tầng riêng sẽ báo giá bổ sung).
+- Phí gia hạn tên miền & hosting từ **năm thứ hai** trở đi.
 - Email doanh nghiệp.
 - Hệ thống quản trị nội dung nâng cao (CMS tự thêm/sửa/xóa) — *hạng mục tùy chọn, báo giá riêng*.
 - Phí dịch vụ bên thứ ba (SMS, Email Marketing, AI, Cổng thanh toán…).

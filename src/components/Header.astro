@@ -126,6 +126,10 @@ import logo from '../assets/logo-ibs.png';
         ? '<path d="M6 6l12 12M18 6 6 18"/>'
         : '<path d="M4 6h16M4 12h16M4 18h16"/>';
     }
+    // Khoá cuộn nền khi menu mở để trang phía sau không chạy (best practice mobile).
+    document.body.classList.toggle('no-scroll', open);
+    const lock = (window as typeof window & { __ibsScrollLock?: (l: boolean) => void }).__ibsScrollLock;
+    if (typeof lock === 'function') lock(open);
   };
   toggle?.addEventListener('click', () => setMenu(menu?.classList.contains('hidden') ?? true));
   document.querySelectorAll('[data-mobile-link]').forEach((a) =>
