@@ -162,6 +162,7 @@ Edit copy there, not in components. Key facts baked in:
 - **StatsBar:** IntersectionObserver count-up.
 - **Projects:** category filter tabs + lightbox (open on card click, close on ✕ / backdrop / Esc).
 - **BaseLayout:** **back-to-top** button (appears after 400px scroll, smooth-scrolls to top) + reveal-on-scroll observer adding `.is-visible` to `.reveal` elements.
+- **Page loader:** stays visible for at least 1.5 seconds and then waits longer if the page load is still in progress.
 - All guard `prefers-reduced-motion`.
 
 ---

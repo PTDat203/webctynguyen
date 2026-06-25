@@ -5,6 +5,7 @@ const navLinks = [...document.querySelectorAll(".site-nav a")];
 const canvas = document.querySelector("#blueprint-canvas");
 const ctx = canvas.getContext("2d");
 const loader = document.querySelector(".page-loader");
+const MINIMUM_LOADER_MS = 1500;
 const scrollVisuals = [
   ...document.querySelectorAll(
     ".hero-image, .river-card, .showcase-card, .stack-card, .gallery-wall img, .contact-image, .full-bleed-media > img",
@@ -54,7 +55,7 @@ function initLoader() {
     }),
   );
 
-  const minimumDelay = new Promise((resolve) => window.setTimeout(resolve, 1100));
+  const minimumDelay = new Promise((resolve) => window.setTimeout(resolve, MINIMUM_LOADER_MS));
 
   Promise.all([imageReady, minimumDelay]).then(() => {
     document.body.classList.remove("is-loading");

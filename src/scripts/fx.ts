@@ -5,6 +5,7 @@
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
+const LOADER_MINIMUM_MS = 1500;
 
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
@@ -256,7 +257,7 @@ function initBlueprint() {
         const md = Math.hypot(n.x - localMx, n.y - localMy);
         const lift = Math.max(0, 1 - md / 200);
         ctx.fillStyle =
-          lift > 0 ? `rgba(224, 184, 74, ${0.3 + lift * 0.5})` : 'rgba(128, 187, 223, 0.32)';
+          lift > 0 ? `rgba(255, 212, 90, ${0.32 + lift * 0.52})` : 'rgba(128, 187, 223, 0.32)';
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r + lift * 2.4, 0, Math.PI * 2);
         ctx.fill();
@@ -282,7 +283,7 @@ function initLoader() {
     document.readyState === 'complete'
       ? Promise.resolve()
       : new Promise<void>((res) => window.addEventListener('load', () => res(), { once: true }));
-  const minDelay = new Promise<void>((res) => window.setTimeout(res, reduced ? 150 : 650));
+  const minDelay = new Promise<void>((res) => window.setTimeout(res, LOADER_MINIMUM_MS));
 
   let done = false;
   const finish = () => {

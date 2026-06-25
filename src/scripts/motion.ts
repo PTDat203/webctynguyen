@@ -18,6 +18,7 @@ function initHero(reduced: boolean) {
   if (!section) return;
 
   const img = section.querySelector<HTMLElement>('[data-hero-image]');
+  const kioskImage = section.querySelector<HTMLElement>('[data-hero-kiosk-image]');
   const overlay = section.querySelector<HTMLElement>('[data-hero-overlay]');
   const goldLine = section.querySelector<HTMLElement>('[data-hero-gold-line]');
   const tagline = section.querySelector<HTMLElement>('[data-hero-tagline]');
@@ -25,6 +26,15 @@ function initHero(reduced: boolean) {
   const subline = section.querySelector<HTMLElement>('[data-hero-subline]');
   const ctas = section.querySelectorAll<HTMLElement>('[data-hero-cta]');
   const chevron = section.querySelector<HTMLElement>('[data-hero-chevron]');
+  const kioskDesktopQuery = window.matchMedia('(min-width: 1280px) and (hover: hover) and (pointer: fine)');
+  const syncKioskVisibility = () => {
+    if (!kioskImage) return;
+    kioskImage.style.display = kioskDesktopQuery.matches ? 'block' : 'none';
+  };
+
+  syncKioskVisibility();
+  kioskDesktopQuery.addEventListener('change', syncKioskVisibility);
+  window.addEventListener('resize', syncKioskVisibility, { passive: true });
 
   if (reduced) {
     showAll();
@@ -34,12 +44,14 @@ function initHero(reduced: boolean) {
   gsap.set([goldLine, tagline, ...lines, subline, ...ctas, chevron], { autoAlpha: 0, y: 24 });
   if (goldLine) gsap.set(goldLine, { scaleX: 0, transformOrigin: 'left center' });
   if (img) gsap.set(img, { scale: 1.08 });
+  if (kioskImage) gsap.set(kioskImage, { scale: 1.08 });
   if (overlay) gsap.set(overlay, { opacity: 1 });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
   if (overlay) tl.to(overlay, { opacity: 0.55, duration: 0.8 }, 0);
   if (img) tl.to(img, { scale: 1, duration: 1.2 }, 0);
+  if (kioskImage) tl.to(kioskImage, { scale: 1, duration: 1.2 }, 0);
   if (goldLine) tl.to(goldLine, { scaleX: 1, duration: 0.5 }, 0.3);
   if (tagline) tl.to(tagline, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.45);
   if (lines.length) tl.to(lines, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.12 }, 0.55);
@@ -48,14 +60,16 @@ function initHero(reduced: boolean) {
   if (chevron) tl.to(chevron, { autoAlpha: 1, y: 0, duration: 0.45 }, 1.1);
 
   if (img) {
-    gsap.to(img, {
+    const heroImages = kioskImage ? [img, kioskImage] : [img];
+
+    gsap.to(heroImages, {
       scale: 1.06,
       duration: 25,
       ease: 'none',
       repeat: -1,
       yoyo: true,
     });
-    gsap.to(img, {
+    gsap.to(heroImages, {
       yPercent: 20,
       ease: 'none',
       scrollTrigger: {

@@ -1,5 +1,5 @@
 import type { ImageMetadata } from 'astro';
-import hero from '../assets/hero.jpg';
+import hero from '../assets/hero-kiosk.png';
 import about from '../assets/about.jpg';
 import sBooth from '../assets/service-booth.jpg';
 import sStage from '../assets/service-stage.jpg';

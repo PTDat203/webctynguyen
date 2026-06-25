@@ -49,12 +49,22 @@ const { title, description } = Astro.props;
   <body class="is-loading">
     <script is:inline>
       // An toàn: luôn gỡ trạng thái loading kể cả khi module script lỗi.
-      window.addEventListener('load', function () {
-        window.setTimeout(function () {
+      (function () {
+        var pageReady =
+          document.readyState === 'complete'
+            ? Promise.resolve()
+            : new Promise(function (resolve) {
+                window.addEventListener('load', resolve, { once: true });
+              });
+        var minimumDelay = new Promise(function (resolve) {
+          window.setTimeout(resolve, 1500);
+        });
+
+        Promise.all([pageReady, minimumDelay]).then(function () {
           document.body.classList.remove('is-loading');
           document.body.classList.add('is-loaded');
-        }, 1200);
-      });
+        });
+      })();
     </script>
     <div class="fx-loader" data-loader aria-hidden="true">
       <div class="fx-loader-logo">
