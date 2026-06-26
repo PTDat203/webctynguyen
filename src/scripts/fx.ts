@@ -303,7 +303,7 @@ function initLoader() {
 function initGoldGlow() {
   if (reduced || !finePointer) return;
   const sel =
-    '.text-gold-metallic, .hero-highlight, .bg-gold-metallic, .bg-gold-metallic-h, .bg-gold, .eyebrow, .btn-primary, .gold-line-metallic';
+    '.text-gold-metallic, .hero-highlight, .bg-gold-metallic, .bg-gold-metallic-h, .bg-gold, .eyebrow, .btn-primary, .gold-line-metallic, .footer-logo-panel';
   document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
     el.addEventListener(
       'mousemove',

@@ -9,7 +9,7 @@ const year = 2026;
 <footer class="bg-gradient-navy-deep text-white/70">
   <div class="container-ibs grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <div class="block w-full rounded-sm bg-white px-5 py-4">
+      <div class="footer-logo-panel block w-full rounded-sm px-5 py-4">
         <Image src={logo} alt="IBS — International Business Services" widths={[320, 480, 640]} class="h-auto w-full" />
       </div>
       <p class="mt-5 text-sm font-light leading-relaxed">
@@ -69,3 +69,64 @@ const year = 2026;
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-logo-panel {
+    position: relative;
+    overflow: hidden;
+    --glow: 0;
+    background:
+      radial-gradient(circle at var(--gx, 50%) var(--gy, 50%),
+        rgba(255, 255, 255, calc(var(--glow, 0) * 0.95)),
+        transparent 46%),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0) 32%),
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #ffffff 11%,
+        #d6dee8 24%,
+        #f5f8fb 35%,
+        #ffffff 47%,
+        #b9c4d0 58%,
+        #eef3f7 70%,
+        #ffffff 84%,
+        #cbd4de 92%,
+        #ffffff 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.58),
+      inset 0 -1px 0 rgba(94, 109, 127, 0.42),
+      0 16px 34px rgba(3, 12, 28, 0.22);
+    transition: box-shadow 0.25s ease, filter 0.25s ease;
+  }
+
+  .footer-logo-panel:hover {
+    --glow: 1;
+    filter: saturate(1.08) brightness(1.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.76),
+      inset 0 -1px 0 rgba(81, 96, 114, 0.48),
+      0 18px 40px rgba(3, 12, 28, 0.28);
+  }
+
+  .footer-logo-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.82) 44%, transparent 68%);
+    opacity: 0.58;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .footer-logo-panel:hover::after {
+    opacity: 0.78;
+  }
+
+  .footer-logo-panel :global(img) {
+    position: relative;
+    z-index: 1;
+  }
+</style>

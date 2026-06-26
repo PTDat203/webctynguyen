@@ -11,14 +11,10 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let lenis: Lenis | null = null;
 
-// Khoảng đệm dưới header cố định để tiêu đề section không bị che.
-function headerOffset(): number {
-  const header = document.getElementById('site-header');
-  return (header?.offsetHeight ?? 72) + 14;
-}
-
+// Let the target section start behind the fixed header so the previous section
+// is not visible through the translucent header background.
 function targetY(el: Element): number {
-  return el.getBoundingClientRect().top + window.scrollY - headerOffset();
+  return Math.max(0, el.getBoundingClientRect().top + window.scrollY);
 }
 
 export function scrollToHash(hash: string): void {
