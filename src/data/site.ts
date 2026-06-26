@@ -226,9 +226,9 @@ export type Service = {
 export const services: Service[] = [
   {
     id: 'thi-cong-gian-hang',
-    no: '01',
+    no: '02',
     icon: 'booth',
-    title: { vi: 'Thiết kế & Thi công gian hàng triển lãm', en: 'Exhibition Booth Design & Construction' },
+    title: { vi: 'Thiết kế & Thi công gian hàng', en: 'Exhibition Booth Design & Construction' },
     tagline: {
       vi: 'Gian tiêu chuẩn · cụm Pavilion · gian đặc biệt',
       en: 'Standard booths · Pavilion clusters · custom booths',
@@ -254,7 +254,7 @@ export const services: Service[] = [
   },
   {
     id: 'dan-dung-su-kien',
-    no: '02',
+    no: '03',
     icon: 'stage',
     title: { vi: 'Tổ chức sự kiện', en: 'Event Organization' },
     tagline: {
@@ -282,7 +282,7 @@ export const services: Service[] = [
   },
   {
     id: 'truyen-thong',
-    no: '03',
+    no: '04',
     icon: 'megaphone',
     title: { vi: 'Truyền thông sự kiện', en: 'Event Communications' },
     tagline: {
@@ -298,10 +298,10 @@ export const services: Service[] = [
   },
   {
     id: 'to-chuc-tron-goi',
-    no: '04',
+    no: '01',
     icon: 'flag',
     title: {
-      vi: 'Tổ chức triển lãm trọn gói theo yêu cầu',
+      vi: 'Tổ chức Triển lãm trọn gói theo yêu cầu',
       en: 'Turnkey Exhibition Organization',
     },
     tagline: {

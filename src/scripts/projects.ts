@@ -58,7 +58,7 @@ export function initProjects() {
     st = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: () => '+=' + (total - 1) * Math.round(window.innerHeight * 0.2),
+      end: () => '+=' + (total - 1) * Math.round(window.innerHeight * 0.25),
       pin: true,
       anticipatePin: 1,
       invalidateOnRefresh: true,

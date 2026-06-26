@@ -125,14 +125,8 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    /* Chiều cao header cố định (khớp h-16 / md:h-20) để các section chừa chỗ. */
+    /* Compact fixed-header height shared by scroll-aware layouts. */
     --header-h: 4rem;
-  }
-
-  @media (min-width: 768px) {
-    html {
-      --header-h: 5rem;
-    }
   }
 
   body {
@@ -153,9 +147,9 @@
     text-wrap: balance;
   }
 
-  /* anchor offset dưới sticky header */
+  /* Let anchor targets start behind the fixed header. */
   section[id] {
-    scroll-margin-top: calc(var(--header-h) + 0.875rem);
+    scroll-margin-top: 0;
   }
 
   ::selection {
