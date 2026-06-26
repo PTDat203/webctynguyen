@@ -68,8 +68,9 @@
 
 ## 6. BẢO HÀNH & HỖ TRỢ
 
-- **Bảo hành 06 tháng:** sửa lỗi kỹ thuật phát sinh từ quá trình lập trình (miễn phí).
-- Hỗ trợ hướng dẫn vận hành, cập nhật nội dung cơ bản trong thời gian bảo hành.
+- **Bảo hành trọn đời:** miễn phí sửa các lỗi kỹ thuật phát sinh từ quá trình lập trình (lỗi chức năng, lỗi hiển thị, lỗi mã nguồn) trong suốt thời gian website hoạt động.
+- **Hỗ trợ kỹ thuật miễn phí 12 tháng đầu:** hướng dẫn vận hành, hỗ trợ cập nhật nội dung cơ bản; sau thời gian này hỗ trợ vận hành/chỉnh sửa theo yêu cầu được báo phí riêng.
+- *Bảo hành trọn đời không bao gồm:* lỗi do bên thứ ba thay đổi mã nguồn, nâng cấp tính năng mới, hay sự cố từ hosting/tên miền/dịch vụ bên ngoài.
 
 ---
 

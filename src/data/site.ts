@@ -20,6 +20,9 @@ export const company = {
   website: 'ibsmaster.com',
   url: 'https://ibsmaster.com',
   facebook: 'https://www.facebook.com/profile.php?id=61573475996497',
+  messenger: 'https://m.me/61573475996497',
+  zalo: 'https://zalo.me/84833588169',
+  smsHref: 'sms:+84833588169',
 } as const;
 
 // Chuỗi giao diện dùng chung (nút, nhãn, tiêu đề khu vực...).
@@ -44,6 +47,11 @@ export const ui = {
     openMenu: { vi: 'Mở menu', en: 'Open menu' } as Bi,
     closeMenu: { vi: 'Đóng menu', en: 'Close menu' } as Bi,
     backToTop: { vi: 'Lên đầu trang', en: 'Back to top' } as Bi,
+    chatMessenger: { vi: 'Chat với chúng tôi qua Messenger', en: 'Chat with us on Messenger' } as Bi,
+    chatZalo: { vi: 'Nhắn tin qua Zalo', en: 'Chat on Zalo' } as Bi,
+    sendSms: { vi: 'Gửi tin nhắn SMS', en: 'Send an SMS' } as Bi,
+    callHotline: { vi: 'Gọi hotline', en: 'Call hotline' } as Bi,
+    moreContact: { vi: 'Thêm cách liên hệ', en: 'More contact options' } as Bi,
     skipToContent: { vi: 'Bỏ qua tới nội dung', en: 'Skip to content' } as Bi,
   },
 
