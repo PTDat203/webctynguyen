@@ -1055,6 +1055,11 @@ body.has-custom-cursor label {
   background: #0068ff;
 }
 
+.contact-fab-action.zalo .contact-fab-zalo {
+  height: 2.4rem;
+  width: 2.4rem;
+}
+
 .contact-fab-action.sms .contact-fab-bubble {
   background: #22c55e;
 }
